@@ -1,0 +1,20 @@
+[GENERATED OBJECT FILE]
+b__boites.o
+[PROJECT FILES]
+/home/sknz/dev/BoiteMaker/BoiteMaker.gpr
+20151105172645
+[BOUND OBJECT FILES]
+/home/sknz/dev/BoiteMaker/obj/box.o
+/home/sknz/dev/BoiteMaker/obj/commandline_args.o
+/home/sknz/dev/BoiteMaker/obj/boites.o
+[GENERATED SOURCE FILES]
+b__boites.ads
+b__boites.adb
+b__boites.ali
+[RESULTING OPTIONS]
+-L/home/sknz/dev/BoiteMaker/obj/
+-L/home/sknz/dev/BoiteMaker/obj/
+-L/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/adalib/
+-static
+-static-libgcc
+/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/adalib/libgnat.a

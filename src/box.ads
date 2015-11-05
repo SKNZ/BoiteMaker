@@ -24,12 +24,16 @@ package box is
     
     -- initialise une boîte avec les paramètres donnés
     -- param t : epaisseur des planches
-    -- param w : hauteur de la boîte
-    -- param l : largeur de la boîte
+    -- param w : largeur de la boîte
+    -- param l : longeur de la boîte
+    -- param h : hauteur de la boîte
     -- param q : longeur des queues
     -- param b : hauteur de la boîte interne
-    function initialize_box(t, h, w, l, q, b : integer) return box_t;
+    function initialize_box(t, w, l, h, q, b : integer) return box_t;
 
     -- valide les mesures fournies pour la boîte
     procedure validate_box_measurements(box : box_t);
+    
+    -- renvoie une chaine de texte décrivant l'état de l'objet
+    function to_string(box : box_t) return string;
 end box;
