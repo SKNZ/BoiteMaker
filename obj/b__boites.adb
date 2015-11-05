@@ -34,6 +34,7 @@ package body ada_main is
    E047 : Short_Integer; pragma Import (Ada, E047, "ada__text_io_E");
    E101 : Short_Integer; pragma Import (Ada, E101, "box_E");
    E105 : Short_Integer; pragma Import (Ada, E105, "commandline_args_E");
+   E157 : Short_Integer; pragma Import (Ada, E157, "generic_linked_list_E");
 
    Local_Priority_Specific_Dispatching : constant String := "";
    Local_Interrupt_States : constant String := "";
@@ -239,6 +240,7 @@ package body ada_main is
       E101 := E101 + 1;
       commandline_args'elab_spec;
       E105 := E105 + 1;
+      E157 := E157 + 1;
    end adainit;
 
    procedure Ada_Main_Program;
@@ -276,6 +278,7 @@ package body ada_main is
 --  BEGIN Object file/option list
    --   /home/sknz/dev/BoiteMaker/obj/box.o
    --   /home/sknz/dev/BoiteMaker/obj/commandline_args.o
+   --   /home/sknz/dev/BoiteMaker/obj/generic_linked_list.o
    --   /home/sknz/dev/BoiteMaker/obj/boites.o
    --   -L/home/sknz/dev/BoiteMaker/obj/
    --   -L/home/sknz/dev/BoiteMaker/obj/

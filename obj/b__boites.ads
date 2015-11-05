@@ -35,7 +35,7 @@ package ada_main is
    pragma Export (C, main, "main");
 
    type Version_32 is mod 2 ** 32;
-   u00001 : constant Version_32 := 16#fd28d4b4#;
+   u00001 : constant Version_32 := 16#f8f062cb#;
    pragma Export (C, u00001, "boitesB");
    u00002 : constant Version_32 := 16#fbff4c67#;
    pragma Export (C, u00002, "system__standard_libraryB");
@@ -345,10 +345,14 @@ package ada_main is
    pragma Export (C, u00154, "system__regexpS");
    u00155 : constant Version_32 := 16#b4645806#;
    pragma Export (C, u00155, "gnat__stringsS");
-   u00156 : constant Version_32 := 16#fd83e873#;
-   pragma Export (C, u00156, "system__concat_2B");
-   u00157 : constant Version_32 := 16#1f879351#;
-   pragma Export (C, u00157, "system__concat_2S");
+   u00156 : constant Version_32 := 16#f964c31c#;
+   pragma Export (C, u00156, "generic_linked_listB");
+   u00157 : constant Version_32 := 16#5778eb1d#;
+   pragma Export (C, u00157, "generic_linked_listS");
+   u00158 : constant Version_32 := 16#fd83e873#;
+   pragma Export (C, u00158, "system__concat_2B");
+   u00159 : constant Version_32 := 16#1f879351#;
+   pragma Export (C, u00159, "system__concat_2S");
    --  BEGIN ELABORATION ORDER
    --  ada%s
    --  ada.characters%s
@@ -506,6 +510,8 @@ package ada_main is
    --  box%b
    --  commandline_args%s
    --  commandline_args%b
+   --  generic_linked_list%s
+   --  generic_linked_list%b
    --  boites%b
    --  END ELABORATION ORDER
 

@@ -1,3 +1,4 @@
+-- Ada packages
 with ada.command_line;
 use ada.command_line;
 with ada.exceptions;
@@ -6,13 +7,18 @@ with ada.integer_text_io;
 use ada.integer_text_io;
 with ada.text_io;
 use ada.text_io;
+
+-- BoiteMaker packages
 with commandline_args;
 use commandline_args;
 with box;
 use box;
+with generic_linked_list;
 
 procedure boites is
     box : box_t;
+    -- test génériques
+    package integer_linked_list is new generic_linked_list(integer);
 begin
     -- Lecture des arguments de la ligne de commande
     begin
