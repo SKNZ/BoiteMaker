@@ -39,4 +39,4 @@ package box_info is
     
     -- renvoie une chaine de texte décrivant l'état de l'objet
     function to_string(box : box_info_t) return string;
-end box;
+end box_info;

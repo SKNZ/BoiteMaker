@@ -41,7 +41,8 @@ package body box_info is
         tab : constant character := ada.characters.latin_1.HT;
         lf : constant character := ada.characters.latin_1.LF;
     begin
-        return "Box info: [ t: " & integer'image(box.thickness) & ", " & lf
+        return "[ " 
+            & ht & "t: " & integer'image(box.thickness) & ", " & lf
             & ht & "w: " & integer'image(box.width) & ", " & lf
             & ht & "l: " & integer'image(box.length) & ", " & lf
             & ht & "h: " & integer'image(box.height) & ", " & lf

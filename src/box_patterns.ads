@@ -7,11 +7,11 @@ package box_patterns is
     -- Liste de points
     package point_list is new generic_linked_list (point_t);
 
-    type box_patterns_t is
+    type box_parts_t is
         record
             
         end record;
 
-    -- Dessine la boîte
-    function get_patterns(box : box_info_t) return point_list;
+    -- Génére les différentes parties de la boîte
+    function get_parts(box : box_info_t) return box_parts_t;
 end package boite;

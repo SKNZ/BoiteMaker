@@ -1,4 +1,7 @@
 with ada.unchecked_deallocation;
+with ada.characters.latin_1;
+use ada.characters.latin_1;
+
 
 package body generic_linked_list is
     -- Instanciation du deallocateur pour le pool d'access node_t
@@ -60,5 +63,28 @@ package body generic_linked_list is
         end if;
 
         node_unchecked_deallocation(node);
+    end;
+
+    -- Helper de récursion permettant la génération de la chaine pour le to_string
+    function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string;
+
+    function to_string(node : node_ptr; to_string : to_string_function_t) return string is
+    begin
+        return "[ "
+            & to_string_helper(node, to_string)
+            & " ]";
+    end;
+
+    function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string is
+        s : string := ada.characters.latin_1.HT & to_string.all(elem(node));
+    begin
+        if has_next(node) then
+            return s
+                & ','
+                & ada.characters.latin_1.LF
+                & to_string_helper(move_next(node), to_string);
+        end if;
+
+        return s;
     end;
 end generic_linked_list;

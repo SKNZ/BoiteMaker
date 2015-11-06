@@ -12,6 +12,9 @@ package generic_linked_list is
     -- Déclaration du type pointeur vers node_t
     type node_ptr is access node_t;
 
+    -- Définit un pointeur de fonction pour une fonction to_string sur element_t
+    type to_string_function_t is access function (elem : element_t) return string;
+
     -- Créer une liste chaine avec un élément
     -- Renvoie le noeud de la chaine crée
     -- ATTENTION: destroy la liste une fois son utilisation terminée
@@ -39,6 +42,9 @@ package generic_linked_list is
     -- Détruit la liste (noeud courrant & noeuds suivants)
     -- Les noeuds avant le noeud passé en paramètre sont ignorés
     procedure destroy(node : in out node_ptr);
+
+    -- Donne une représentation textuelle de la liste (chacun des éléments)
+    function to_string(node : node_ptr; to_string : to_string_function_t) return string;
 
     private
 

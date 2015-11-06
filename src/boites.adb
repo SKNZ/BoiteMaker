@@ -23,6 +23,11 @@ procedure boites is
 
     list : node_ptr := null;
     node2 : node_ptr := null;
+
+    function int_to_str(x : integer) return string is
+    begin
+        return integer'image(x);
+    end;
 begin
     -- Lecture des arguments de la ligne de commande
     begin
@@ -56,6 +61,8 @@ end;
 --    put_line(boolean'image(has_next(list)));
 --    put_line(boolean'image(has_next(node2)));
 --    put(elem(node2));
+--    new_line;
+--    put(to_string(list, int_to_str'access));
 --    new_line;
 --
 --    remove_next(list);

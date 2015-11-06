@@ -7,32 +7,32 @@ with Ada.Exceptions;
 package body ada_main is
    pragma Warnings (Off);
 
-   E076 : Short_Integer; pragma Import (Ada, E076, "system__os_lib_E");
-   E013 : Short_Integer; pragma Import (Ada, E013, "system__soft_links_E");
-   E019 : Short_Integer; pragma Import (Ada, E019, "system__exception_table_E");
-   E050 : Short_Integer; pragma Import (Ada, E050, "ada__io_exceptions_E");
+   E078 : Short_Integer; pragma Import (Ada, E078, "system__os_lib_E");
+   E015 : Short_Integer; pragma Import (Ada, E015, "system__soft_links_E");
+   E021 : Short_Integer; pragma Import (Ada, E021, "system__exception_table_E");
+   E052 : Short_Integer; pragma Import (Ada, E052, "ada__io_exceptions_E");
    E111 : Short_Integer; pragma Import (Ada, E111, "ada__strings_E");
    E113 : Short_Integer; pragma Import (Ada, E113, "ada__strings__maps_E");
    E116 : Short_Integer; pragma Import (Ada, E116, "ada__strings__maps__constants_E");
-   E052 : Short_Integer; pragma Import (Ada, E052, "ada__tags_E");
-   E049 : Short_Integer; pragma Import (Ada, E049, "ada__streams_E");
-   E074 : Short_Integer; pragma Import (Ada, E074, "interfaces__c_E");
-   E021 : Short_Integer; pragma Import (Ada, E021, "system__exceptions_E");
-   E079 : Short_Integer; pragma Import (Ada, E079, "system__file_control_block_E");
-   E068 : Short_Integer; pragma Import (Ada, E068, "system__file_io_E");
-   E072 : Short_Integer; pragma Import (Ada, E072, "system__finalization_root_E");
-   E070 : Short_Integer; pragma Import (Ada, E070, "ada__finalization_E");
+   E054 : Short_Integer; pragma Import (Ada, E054, "ada__tags_E");
+   E051 : Short_Integer; pragma Import (Ada, E051, "ada__streams_E");
+   E076 : Short_Integer; pragma Import (Ada, E076, "interfaces__c_E");
+   E023 : Short_Integer; pragma Import (Ada, E023, "system__exceptions_E");
+   E081 : Short_Integer; pragma Import (Ada, E081, "system__file_control_block_E");
+   E070 : Short_Integer; pragma Import (Ada, E070, "system__file_io_E");
+   E074 : Short_Integer; pragma Import (Ada, E074, "system__finalization_root_E");
+   E072 : Short_Integer; pragma Import (Ada, E072, "ada__finalization_E");
    E136 : Short_Integer; pragma Import (Ada, E136, "system__storage_pools_E");
    E130 : Short_Integer; pragma Import (Ada, E130, "system__finalization_masters_E");
    E126 : Short_Integer; pragma Import (Ada, E126, "system__storage_pools__subpools_E");
    E144 : Short_Integer; pragma Import (Ada, E144, "gnat__directory_operations_E");
    E149 : Short_Integer; pragma Import (Ada, E149, "system__pool_global_E");
-   E009 : Short_Integer; pragma Import (Ada, E009, "system__secondary_stack_E");
+   E011 : Short_Integer; pragma Import (Ada, E011, "system__secondary_stack_E");
    E118 : Short_Integer; pragma Import (Ada, E118, "ada__strings__unbounded_E");
    E154 : Short_Integer; pragma Import (Ada, E154, "system__regexp_E");
    E108 : Short_Integer; pragma Import (Ada, E108, "gnat__command_line_E");
-   E047 : Short_Integer; pragma Import (Ada, E047, "ada__text_io_E");
-   E101 : Short_Integer; pragma Import (Ada, E101, "box_E");
+   E049 : Short_Integer; pragma Import (Ada, E049, "ada__text_io_E");
+   E103 : Short_Integer; pragma Import (Ada, E103, "box_info_E");
    E105 : Short_Integer; pragma Import (Ada, E105, "commandline_args_E");
    E157 : Short_Integer; pragma Import (Ada, E157, "generic_linked_list_E");
 
@@ -43,7 +43,7 @@ package body ada_main is
 
    procedure finalize_library is
    begin
-      E047 := E047 - 1;
+      E049 := E049 - 1;
       declare
          procedure F1;
          pragma Import (Ada, F1, "ada__text_io__finalize_spec");
@@ -68,7 +68,7 @@ package body ada_main is
          procedure F4;
          pragma Import (Ada, F4, "system__file_io__finalize_body");
       begin
-         E068 := E068 - 1;
+         E070 := E070 - 1;
          F4;
       end;
       E130 := E130 - 1;
@@ -183,9 +183,9 @@ package body ada_main is
 
       System.Soft_Links'Elab_Spec;
       System.Exception_Table'Elab_Body;
-      E019 := E019 + 1;
+      E021 := E021 + 1;
       Ada.Io_Exceptions'Elab_Spec;
-      E050 := E050 + 1;
+      E052 := E052 + 1;
       Ada.Strings'Elab_Spec;
       E111 := E111 + 1;
       Ada.Strings.Maps'Elab_Spec;
@@ -193,16 +193,16 @@ package body ada_main is
       E116 := E116 + 1;
       Ada.Tags'Elab_Spec;
       Ada.Streams'Elab_Spec;
-      E049 := E049 + 1;
+      E051 := E051 + 1;
       Interfaces.C'Elab_Spec;
       System.Exceptions'Elab_Spec;
-      E021 := E021 + 1;
+      E023 := E023 + 1;
       System.File_Control_Block'Elab_Spec;
-      E079 := E079 + 1;
+      E081 := E081 + 1;
       System.Finalization_Root'Elab_Spec;
-      E072 := E072 + 1;
+      E074 := E074 + 1;
       Ada.Finalization'Elab_Spec;
-      E070 := E070 + 1;
+      E072 := E072 + 1;
       System.Storage_Pools'Elab_Spec;
       E136 := E136 + 1;
       System.Finalization_Masters'Elab_Spec;
@@ -214,17 +214,17 @@ package body ada_main is
       System.Finalization_Masters'Elab_Body;
       E130 := E130 + 1;
       System.File_Io'Elab_Body;
-      E068 := E068 + 1;
-      E074 := E074 + 1;
+      E070 := E070 + 1;
+      E076 := E076 + 1;
       Ada.Tags'Elab_Body;
-      E052 := E052 + 1;
+      E054 := E054 + 1;
       E113 := E113 + 1;
       System.Soft_Links'Elab_Body;
-      E013 := E013 + 1;
+      E015 := E015 + 1;
       System.Os_Lib'Elab_Body;
-      E076 := E076 + 1;
+      E078 := E078 + 1;
       System.Secondary_Stack'Elab_Body;
-      E009 := E009 + 1;
+      E011 := E011 + 1;
       Gnat.Directory_Operations'Elab_Body;
       E144 := E144 + 1;
       Ada.Strings.Unbounded'Elab_Spec;
@@ -234,10 +234,11 @@ package body ada_main is
       Gnat.Command_Line'Elab_Spec;
       Ada.Text_Io'Elab_Spec;
       Ada.Text_Io'Elab_Body;
-      E047 := E047 + 1;
+      E049 := E049 + 1;
       Gnat.Command_Line'Elab_Body;
       E108 := E108 + 1;
-      E101 := E101 + 1;
+      box_info'elab_spec;
+      E103 := E103 + 1;
       commandline_args'elab_spec;
       E105 := E105 + 1;
       E157 := E157 + 1;
@@ -276,13 +277,13 @@ package body ada_main is
    end;
 
 --  BEGIN Object file/option list
-   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/box.o
-   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/commandline_args.o
-   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/generic_linked_list.o
-   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/boites.o
-   --   -L/user/5/.base/narenjif/home/dev/BoiteMaker/obj/
-   --   -L/user/5/.base/narenjif/home/dev/BoiteMaker/obj/
-   --   -L/opt/gnat/lib/gcc/x86_64-pc-linux-gnu/4.9.3/adalib/
+   --   /home/sknz/dev/BoiteMaker/obj/box_info.o
+   --   /home/sknz/dev/BoiteMaker/obj/commandline_args.o
+   --   /home/sknz/dev/BoiteMaker/obj/generic_linked_list.o
+   --   /home/sknz/dev/BoiteMaker/obj/boites.o
+   --   -L/home/sknz/dev/BoiteMaker/obj/
+   --   -L/home/sknz/dev/BoiteMaker/obj/
+   --   -L/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/adalib/
    --   -static
    --   -lgnat
 --  END Object file/option list   
