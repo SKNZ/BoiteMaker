@@ -1,9 +1,9 @@
 with ada.characters.latin_1;
 use ada.characters.latin_1;
 
-package body box is
-    function initialize_box(t, w, l, h, q, b : integer) return box_t is
-        box : box_t := (thickness => t,
+package body box_info is
+    function initialize_box(t, w, l, h, q, b : integer) return box_info_t is
+        box : box_info_t := (thickness => t,
                     height => h,
                     width => w,
                     length => l,
@@ -18,7 +18,7 @@ package body box is
     -- l-2t, w-2t > 0
     -- b < h-2t
     -- q <= l-2t
-    procedure validate_box_measurements(box : box_t) is
+    procedure validate_box_measurements(box : box_info_t) is
     begin
         if not(box.thickness > 0 
             and box.length > 0 
@@ -37,15 +37,15 @@ package body box is
     end;
 
     -- renvoie une chaine de texte décrivant l'état de l'objet
-    function to_string(box : box_t) return string is
+    function to_string(box : box_info_t) return string is
         tab : constant character := ada.characters.latin_1.HT;
         lf : constant character := ada.characters.latin_1.LF;
     begin
-        return "Box object: [ t: " & integer'image(box.thickness) & ", " & lf
+        return "Box info: [ t: " & integer'image(box.thickness) & ", " & lf
             & ht & "w: " & integer'image(box.width) & ", " & lf
             & ht & "l: " & integer'image(box.length) & ", " & lf
             & ht & "h: " & integer'image(box.height) & ", " & lf
             & ht & "q: " & integer'image(box.queue_length) & ", " & lf
             & ht & "b: " & integer'image(box.inner_height) & " ]";
     end;
-end box;
+end box_info;

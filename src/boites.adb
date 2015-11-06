@@ -11,14 +11,18 @@ use ada.text_io;
 -- BoiteMaker packages
 with commandline_args;
 use commandline_args;
-with box;
-use box;
+with box_info;
+use box_info;
 with generic_linked_list;
 
 procedure boites is
-    box : box_t;
+    box : box_info_t;
     -- test génériques
-    package integer_linked_list is new generic_linked_list(integer);
+    package int_list is new generic_linked_list(integer);
+    use int_list; 
+
+    list : node_ptr := null;
+    node2 : node_ptr := null;
 begin
     -- Lecture des arguments de la ligne de commande
     begin
@@ -34,8 +38,31 @@ begin
             return;
     end;
 
-    box := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
-    put_line(to_string(box));
-
-    
 end;
+
+-- TU args
+-- Vérifier que les exceptions soient bien levées
+
+-- TU liste
+--    box := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
+--    put_line(to_string(box));
+--
+--    list := create(10);
+--    put_line(boolean'image(has_next(list)));
+--    put(elem(list));
+--    new_line;
+--
+--    node2 := add_after(list, 20);
+--    put_line(boolean'image(has_next(list)));
+--    put_line(boolean'image(has_next(node2)));
+--    put(elem(node2));
+--    new_line;
+--
+--    remove_next(list);
+--    put_line(boolean'image(has_next(list)));
+--    put(elem(list));
+--    new_line;
+--
+--    destroy(list);
+--
+--    put_line(boolean'image(list = null));

@@ -15,7 +15,7 @@ package ada_main is
    pragma Import (C, gnat_exit_status);
 
    GNAT_Version : constant String :=
-                    "GNAT Version: 5.2.0" & ASCII.NUL;
+                    "GNAT Version: GPL 2015 (20150428-49)" & ASCII.NUL;
    pragma Export (C, GNAT_Version, "__gnat_version");
 
    Ada_Main_Program_Name : constant String := "_ada_boites" & ASCII.NUL;
@@ -35,7 +35,7 @@ package ada_main is
    pragma Export (C, main, "main");
 
    type Version_32 is mod 2 ** 32;
-   u00001 : constant Version_32 := 16#f8f062cb#;
+   u00001 : constant Version_32 := 16#852c9c87#;
    pragma Export (C, u00001, "boitesB");
    u00002 : constant Version_32 := 16#fbff4c67#;
    pragma Export (C, u00002, "system__standard_libraryB");
@@ -345,9 +345,9 @@ package ada_main is
    pragma Export (C, u00154, "system__regexpS");
    u00155 : constant Version_32 := 16#b4645806#;
    pragma Export (C, u00155, "gnat__stringsS");
-   u00156 : constant Version_32 := 16#f964c31c#;
+   u00156 : constant Version_32 := 16#a5e27155#;
    pragma Export (C, u00156, "generic_linked_listB");
-   u00157 : constant Version_32 := 16#5778eb1d#;
+   u00157 : constant Version_32 := 16#a346df94#;
    pragma Export (C, u00157, "generic_linked_listS");
    u00158 : constant Version_32 := 16#fd83e873#;
    pragma Export (C, u00158, "system__concat_2B");

@@ -276,13 +276,13 @@ package body ada_main is
    end;
 
 --  BEGIN Object file/option list
-   --   /home/sknz/dev/BoiteMaker/obj/box.o
-   --   /home/sknz/dev/BoiteMaker/obj/commandline_args.o
-   --   /home/sknz/dev/BoiteMaker/obj/generic_linked_list.o
-   --   /home/sknz/dev/BoiteMaker/obj/boites.o
-   --   -L/home/sknz/dev/BoiteMaker/obj/
-   --   -L/home/sknz/dev/BoiteMaker/obj/
-   --   -L/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/adalib/
+   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/box.o
+   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/commandline_args.o
+   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/generic_linked_list.o
+   --   /user/5/.base/narenjif/home/dev/BoiteMaker/obj/boites.o
+   --   -L/user/5/.base/narenjif/home/dev/BoiteMaker/obj/
+   --   -L/user/5/.base/narenjif/home/dev/BoiteMaker/obj/
+   --   -L/opt/gnat/lib/gcc/x86_64-pc-linux-gnu/4.9.3/adalib/
    --   -static
    --   -lgnat
 --  END Object file/option list   
