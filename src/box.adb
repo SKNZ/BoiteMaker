@@ -13,9 +13,27 @@ package body box is
         return box;
     end;
 
+    -- requiert :
+    -- t, l, w, q, h, b, q > 0
+    -- l-2t, w-2t > 0
+    -- b < h-2t
+    -- q <= l-2t
     procedure validate_box_measurements(box : box_t) is
     begin
-        null;
+        if not(box.thickness > 0 
+            and box.length > 0 
+            and box.width > 0 
+            and box.queue_length > 0 
+            and box.height > 0 
+            and box.inner_height > 0 
+            and box.queue_length > 0 
+            and box.length-2*box.thickness > 0 
+            and box.width-2*box.thickness > 0 
+            and box.inner_height < box.height-2*box.thickness 
+            and box.queue_length <= box.length-2*box.thickness)
+        then
+            raise invalid_args;
+        end if;
     end;
 
     -- renvoie une chaine de texte décrivant l'état de l'objet

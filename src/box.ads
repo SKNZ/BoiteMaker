@@ -36,4 +36,7 @@ package box is
     
     -- renvoie une chaine de texte décrivant l'état de l'objet
     function to_string(box : box_t) return string;
+
+    -- exception levée si paramètres incorrects
+    invalid_args : exception;
 end box;
