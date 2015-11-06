@@ -1,6 +1,6 @@
-package box is
+package box_info is
     -- décrit les paramètres de la boîte
-    type box_t is
+    type box_info_t is
         record
             -- paramètre t
             thickness : integer;
@@ -29,11 +29,11 @@ package box is
     -- param h : hauteur de la boîte
     -- param q : longeur des queues
     -- param b : hauteur de la boîte interne
-    function initialize_box(t, w, l, h, q, b : integer) return box_t;
+    function initialize_box(t, w, l, h, q, b : integer) return box_info_t;
 
     -- valide les mesures fournies pour la boîte
-    procedure validate_box_measurements(box : box_t);
+    procedure validate_box_measurements(box : box_info_t);
     
     -- renvoie une chaine de texte décrivant l'état de l'objet
-    function to_string(box : box_t) return string;
+    function to_string(box : box_info_t) return string;
 end box;

@@ -13,7 +13,9 @@ package generic_linked_list is
     type node_ptr is access node_t;
 
     -- Créer une liste chaine avec un élément
-    -- Renvoie le noeud de la chainée crée
+    -- Renvoie le noeud de la chaine crée
+    -- ATTENTION: destroy la liste une fois son utilisation terminée
+    --              sinon risque de fuite mémoire
     function create(element : element_t) return node_ptr;
 
     -- Ajoute un élément à la fin de la liste chainée
@@ -30,10 +32,18 @@ package generic_linked_list is
     -- Avance au noeud suivant
     -- Exception: no_node si aucun noeud suivant
     function move_next(node : node_ptr) return node_ptr;
-    
+
+    -- Renvoie l'élément porté par le noeud
+    function elem(node : node_ptr) return element_t;
+
+    -- Détruit la liste (noeud courrant & noeuds suivants)
+    -- Les noeuds avant le noeud passé en paramètre sont ignorés
+    procedure destroy(node : in out node_ptr);
+
     private
 
     -- Implémentation du type node_t
+    -- privé
     type node_t is
         record
             -- l'élément porté par le noeud
