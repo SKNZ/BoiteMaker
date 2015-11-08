@@ -23,6 +23,7 @@ package generic_linked_list is
 
     -- Ajoute un élément à la fin de la liste chainée
     function add_after(node : node_ptr; element : element_t) return node_ptr;
+    procedure add_after(node : node_ptr; element : element_t);
 
     -- Retire l'élement suivant l'élément passé en
     -- paramètre de la liste chainée

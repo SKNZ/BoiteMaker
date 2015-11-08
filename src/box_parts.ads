@@ -3,10 +3,7 @@ use point;
 with box_info;
 use box_info;
 
-package box_patterns is
-    -- Liste de points
-    package point_list is new generic_linked_list (point_t);
-
+package box_parts is
     type box_parts_t is
         record
             

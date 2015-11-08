@@ -9,11 +9,13 @@ with ada.text_io;
 use ada.text_io;
 
 -- BoiteMaker packages
+with generic_linked_list;
 with commandline_args;
 use commandline_args;
 with box_info;
 use box_info;
-with generic_linked_list;
+with halfbox;
+use halfbox;
 
 procedure boites is
     box : box_info_t;
@@ -28,6 +30,8 @@ procedure boites is
     begin
         return integer'image(x);
     end;
+
+    halfbox : halfbox_t;
 begin
     -- Lecture des arguments de la ligne de commande
     begin
@@ -42,6 +46,10 @@ begin
             set_exit_status(1);
             return;
     end;
+
+    halfbox := get_halfbox(get_w, get_l, get_h, get_t, get_q);
+    put(to_string(halfbox));
+    new_line;
 
 end;
 

@@ -12,13 +12,13 @@ package body commandline_args is
     begin
         -- Boucle d'obtention des paramètres
         loop
-            case getopt("t: l: w: q: h: b: f:") is
+            case getopt("t: w: l: q: h: b: f:") is
                 when 't' =>
                     t := integer'value(parameter);
-                when 'l' =>
-                    l := integer'value(parameter);
                 when 'w' =>
                     w := integer'value(parameter);
+                when 'l' =>
+                    l := integer'value(parameter);
                 when 'q' =>
                     q := integer'value(parameter);
                 when 'h' =>
@@ -34,8 +34,8 @@ package body commandline_args is
 
         -- Vérification de la validité des paramètres saisis
         validate_int_initialization(t, "t");
-        validate_int_initialization(l, "l");
         validate_int_initialization(w, "w");
+        validate_int_initialization(l, "l");
         validate_int_initialization(q, "q");
         validate_int_initialization(h, "h");
         validate_int_initialization(b, "b");

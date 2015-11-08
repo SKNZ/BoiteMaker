@@ -15,12 +15,16 @@ package body generic_linked_list is
     end;
 
     function add_after(node : node_ptr; element : element_t) return node_ptr is
+    begin
+        add_after(node, element);
+        return move_next(node);
+    end;
+
+    procedure add_after(node : node_ptr; element : element_t) is
         new_node : node_ptr := new node_t;
     begin
         new_node.all := (element => element, next_node => null);
         node.next_node := new_node;
-
-        return new_node;
     end;
 
     procedure remove_next(node : node_ptr) is
@@ -65,26 +69,26 @@ package body generic_linked_list is
         node_unchecked_deallocation(node);
     end;
 
-    -- Helper de récursion permettant la génération de la chaine pour le to_string
-    function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string;
-
     function to_string(node : node_ptr; to_string : to_string_function_t) return string is
+        -- Helper de récursion permettant la génération de la chaine pour le to_string
+        function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string is
+            s : string := ada.characters.latin_1.HT & to_string.all(elem(node));
+        begin
+            if has_next(node) then
+                return s
+                    & ','
+                    & ada.characters.latin_1.LF
+                    & to_string_helper(move_next(node), to_string);
+            end if;
+
+            return s & ada.characters.latin_1.LF;
+        end;
     begin
-        return "[ "
+        return "["
+            & ada.characters.latin_1.LF
             & to_string_helper(node, to_string)
-            & " ]";
+            & ada.characters.latin_1.HT
+            & "]";
     end;
 
-    function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string is
-        s : string := ada.characters.latin_1.HT & to_string.all(elem(node));
-    begin
-        if has_next(node) then
-            return s
-                & ','
-                & ada.characters.latin_1.LF
-                & to_string_helper(move_next(node), to_string);
-        end if;
-
-        return s;
-    end;
 end generic_linked_list;
