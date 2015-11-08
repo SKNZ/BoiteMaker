@@ -41,8 +41,4 @@ package point is
     mv_r_ptr : constant mv_procedure_t := mv_r'access;
     mv_u_ptr : constant mv_procedure_t := mv_u'access;
     mv_d_ptr : constant mv_procedure_t := mv_d'access;
-
-    generic
-        mv : mv_procedure_t;
-    procedure int_mv (point : in out point_t; delta_axis : integer);
 end point;
