@@ -1,7 +1,7 @@
 package halfbox_info is
     type halfbox_info_t is
         record
-            -- longeur de la demi boite
+            -- longueur de la demi boite
             length : integer;
 
             -- largeur de la demi boite
@@ -13,7 +13,7 @@ package halfbox_info is
             -- epaisseur des planches
             thickness : integer;
 
-            -- longeur des queues
+            -- longueur des queues
             queue_length : integer;
         end record;
 

@@ -28,9 +28,9 @@ package box_info is
     -- initialise une boîte avec les paramètres donnés
     -- param t : epaisseur des planches
     -- param w : largeur de la boîte
-    -- param l : longeur de la boîte
+    -- param l : longueur de la boîte
     -- param h : hauteur de la boîte
-    -- param q : longeur des queues
+    -- param q : longueur des queues
     -- param b : hauteur de la boîte interne
     function initialize_box(t, w, l, h, q, b : integer) return box_info_t;
 
