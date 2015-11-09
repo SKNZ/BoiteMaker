@@ -15,6 +15,7 @@ package body box_info is
 
     -- requiert :
     -- t, l, w, q, h, b, q > 0
+    -- l >= w
     -- l-2t, w-2t > 0
     -- b < h-2t
     -- q <= l-2t
@@ -27,6 +28,7 @@ package body box_info is
             and box.height > 0 
             and box.inner_height > 0 
             and box.queue_length > 0 
+            and box.length >= box.width
             and box.length-2*box.thickness > 0 
             and box.width-2*box.thickness > 0 
             and box.inner_height < box.height-2*box.thickness 
