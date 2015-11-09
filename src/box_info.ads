@@ -35,6 +35,7 @@ package box_info is
     function initialize_box(t, w, l, h, q, b : integer) return box_info_t;
 
     -- valide les mesures fournies pour la boîte
+    -- exception : invalid_args si incohérence dans les coordonnées
     procedure validate_box_measurements(box : box_info_t);
     
     -- renvoie une chaine de texte décrivant l'état de l'objet

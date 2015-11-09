@@ -9,29 +9,20 @@ with ada.text_io;
 use ada.text_io;
 
 -- BoiteMaker packages
-with generic_linked_list;
 with commandline_args;
 use commandline_args;
 with box_info;
 use box_info;
 with halfbox;
 use halfbox;
+with box_parts;
+use box_parts;
 
 procedure boites is
     box : box_info_t;
-    -- test génériques
-    package int_list is new generic_linked_list(integer);
-    use int_list; 
 
-    list : node_ptr := null;
-    node2 : node_ptr := null;
-
-    function int_to_str(x : integer) return string is
-    begin
-        return integer'image(x);
-    end;
-
-    halfbox : halfbox_t;
+    box_info : box_info_t;
+    box_parts : box_parts_t;
 begin
     -- Lecture des arguments de la ligne de commande
     begin
@@ -47,16 +38,52 @@ begin
             return;
     end;
 
-    halfbox := get_halfbox(get_w, get_l, get_h, get_t, get_q);
-    put(to_string(halfbox));
-    new_line;
+    -- Construction de l'objet portant les informations de la boîte
+    box_info := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
 
+    -- Vérification de la cohérence des informations
+    begin
+        validate_box_measurements(box_info);    
+    exception
+        -- Argument invalide
+        when e: invalid_args =>
+            put_line("Vos argument ne respectaient pas la contrainte suivante: "
+                & exception_message(e));
+
+            -- Indication au shell d'un status d'erreur
+            set_exit_status(2);
+            return;
+    end;
+
+    -- Obtention des différens morceaux de la boîte
+    box_parts := get_parts(box_info); 
+
+    -- Export de la boîte générée
+    put_line(to_string(box_parts));
 end;
 
+-- TU halfbox
+--   halfbox : halfbox_t;
+--  
+--   halfbox := get_halfbox(get_w, get_l, get_h, get_t, get_q);
+--   put(to_string(halfbox));
+--   new_line;
+--
 -- TU args
 -- Vérifier que les exceptions soient bien levées
 
 -- TU liste
+--
+--    function int_to_str(x : integer) return string is
+--    begin
+--        return integer'image(x);
+--    end;
+--    list : node_ptr := null;
+--    node2 : node_ptr := null;
+--
+--    -- test génériques
+--    package int_list is new generic_linked_list(integer);
+--    use int_list; 
 --    box := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
 --    put_line(to_string(box));
 --
