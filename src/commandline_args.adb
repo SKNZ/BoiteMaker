@@ -27,8 +27,6 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
-                when others =>
-                    exit;
             end case;
         end loop;
 
