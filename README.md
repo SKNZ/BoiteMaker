@@ -2,7 +2,7 @@
 
 Creates boxes.
 
-Made by Floran NARENJI-SHESHKALANI & Robin VINCENT-DELLEUZE as a part of the Ensimag Ada course.
+Made by Robin VINCENT-DELLEUZE & Floran NARENJI-SHESHKALANI as a part of the Ensimag Ada course.
 Main file is src/boites.adb
 Comments in the code are written in French due to school-related constraints.
 
