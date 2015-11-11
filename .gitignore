@@ -4,5 +4,5 @@
 # Ada Library Information
 *.ali
 
-obj/
-bin/
+obj/*
+bin/*
