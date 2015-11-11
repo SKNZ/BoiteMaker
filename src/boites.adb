@@ -25,41 +25,36 @@ procedure boites is
     box_parts : box_parts_t;
 begin
     -- Lecture des arguments de la ligne de commande
-    begin
-        commandline_args.initialize;
-    exception
-        -- Argument manquant
-        when e: argument_missing =>
-            put_line("Un argument est manquant: "
-                & exception_message(e));
-
-            -- Indication au shell d'un status d'erreur
-            set_exit_status(1);
-            return;
-    end;
-
+    commandline_args.initialize;
+    
     -- Construction de l'objet portant les informations de la boîte
     box_info := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
 
     -- Vérification de la cohérence des informations
-    begin
-        validate_box_measurements(box_info);    
-    exception
-        -- Argument invalide
-        when e: invalid_args =>
-            put_line("Vos argument ne respectaient pas la contrainte suivante: "
-                & exception_message(e));
-
-            -- Indication au shell d'un status d'erreur
-            set_exit_status(2);
-            return;
-    end;
+    validate_box_measurements(box_info);    
 
     -- Obtention des différens morceaux de la boîte
     box_parts := get_parts(box_info); 
 
     -- Export de la boîte générée
     put_line(to_string(box_parts));
+exception
+    -- Argument manquant
+    when e: argument_missing =>
+        put_line("Un argument est manquant: "
+            & exception_message(e));
+
+        -- Indication au shell d'un status d'erreur
+        set_exit_status(1);
+        return;
+    -- Argument invalide
+    when e: invalid_args =>
+        put_line("Vos argument ne respectaient pas la contrainte suivante: "
+            & exception_message(e));
+
+        -- Indication au shell d'un status d'erreur
+        set_exit_status(2);
+        return;
 end;
 
 -- TU halfbox

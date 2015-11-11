@@ -31,6 +31,8 @@ package commandline_args is
     -- Obtient le paramètre f
     function get_f return string;
 
+    -- Obtient une option autre que les options prévues par défaut 
+    function get_option(option : string) return string;
 private
     -- Constante définissant l'état non initialise
     int_no_value : constant integer := -1;

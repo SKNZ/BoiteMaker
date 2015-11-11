@@ -27,6 +27,8 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
+                when others =>
+                    exit;
             end case;
         end loop;
 
@@ -83,5 +85,14 @@ package body commandline_args is
     function get_f return string is
     begin
         return to_string(f);
+    end;
+
+    function get_option(option : string) return string is
+    begin
+        if getopt(option & ":") /= option then
+            raise argument_missing with option;
+        end if;
+
+        return parameter;
     end;
 end commandline_args;
