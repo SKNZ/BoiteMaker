@@ -17,6 +17,8 @@ with halfbox;
 use halfbox;
 with box_parts;
 use box_parts;
+with exporter;
+use exporter;
 
 procedure boites is
     box_info : box_info_t;
@@ -44,7 +46,6 @@ exception
 
         -- Indication au shell d'un status d'erreur
         set_exit_status(1);
-        return;
     -- Argument invalide
     when e: invalid_args =>
         put_line("Vos argument ne respectaient pas la contrainte suivante: "
@@ -52,7 +53,13 @@ exception
 
         -- Indication au shell d'un status d'erreur
         set_exit_status(2);
-        return;
+    -- Format d'export inconnu
+    when e: unknown_format =>
+        put_line("Le format d'export demandé n'est pas reconnu: "
+            & exception_message(e));
+
+        -- Indication au shell d'un status d'erreur
+        set_exit_status(3);
 end;
 
 -- TU halfbox

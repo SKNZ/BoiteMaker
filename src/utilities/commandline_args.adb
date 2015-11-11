@@ -88,10 +88,10 @@ package body commandline_args is
         return to_string(f);
     end;
 
-    function get_option(option : character) return string is
+    function get_option(option : character; default : string) return string is
     begin
         if getopt(option & ":") /= option then
-            raise argument_missing with character'image(option);
+            return default;
         end if;
 
         return parameter;
