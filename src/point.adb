@@ -53,7 +53,7 @@ package body point is
     -- fonction générique passant l'entier delta_axis en tant que float
     -- à la proceduré passée en paramètre de généricité
     generic
-        mv : mv_procedure_t;
+        mv : mv_ptr;
     procedure int_mv (point : in out point_t; delta_axis : integer);
 
     procedure int_mv (point : in out point_t; delta_axis : integer) is

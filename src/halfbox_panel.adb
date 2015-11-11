@@ -7,7 +7,7 @@ with ada.characters.latin_1;
 package body halfbox_panel is
     -- Ajoute les queues et les encoches
     -- Impl. et doc plus bas
-    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_procedure_t);
+    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr);
 
     function get_bottom_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
         -- position courante
@@ -133,11 +133,11 @@ package body halfbox_panel is
     -- last_point: le dernier point du polygone
     -- queue_length : longueur des queues
     -- queue_width : largeur des queues 
-    -- l_queue_count : le nombre de queues
+    -- queue_count : le nombre de queues
     -- mv_line : fonction de mouvement formant la grande ligne entre une queue et une encoche (et inversement)
     -- mv_queue : fonction de mouvement pour une queue
     -- mv_encoche : fonction de mouvement pour une encoche
-    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_procedure_t) is
+    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr) is
     begin
         for i in 1 .. queue_count loop
             -- On commence par une encoche (d'où le mod = 1)

@@ -91,7 +91,7 @@ package body commandline_args is
     function get_option(option : character) return string is
     begin
         if getopt(option & ":") /= option then
-            raise argument_missing with option;
+            raise argument_missing with character'image(option);
         end if;
 
         return parameter;

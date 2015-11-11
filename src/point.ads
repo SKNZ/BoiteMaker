@@ -35,10 +35,10 @@ package point is
     procedure mv_d(point : in out point_t; delta_y : integer);
 
     -- Type décrivant un pointeur de fonction vers une procédure de mv
-    type mv_procedure_t is access procedure (point : in out point_t; delta_axis : float);
+    type mv_ptr is access procedure (point : in out point_t; delta_axis : float);
 
-    mv_l_ptr : constant mv_procedure_t := mv_l'access;
-    mv_r_ptr : constant mv_procedure_t := mv_r'access;
-    mv_u_ptr : constant mv_procedure_t := mv_u'access;
-    mv_d_ptr : constant mv_procedure_t := mv_d'access;
+    mv_l_ptr : constant mv_ptr := mv_l'access;
+    mv_r_ptr : constant mv_ptr := mv_r'access;
+    mv_u_ptr : constant mv_ptr := mv_u'access;
+    mv_d_ptr : constant mv_ptr := mv_d'access;
 end point;
