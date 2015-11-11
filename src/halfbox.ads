@@ -8,7 +8,7 @@ use halfbox_info;
 package halfbox is
     type halfbox_t is
         record
-            -- mesures de la demi-obite
+            -- mesures de la demi-boite
             info : halfbox_info_t;
 
             -- face inférieure

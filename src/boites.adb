@@ -19,8 +19,6 @@ with box_parts;
 use box_parts;
 
 procedure boites is
-    box : box_info_t;
-
     box_info : box_info_t;
     box_parts : box_parts_t;
 begin

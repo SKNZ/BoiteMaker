@@ -11,6 +11,7 @@ package body commandline_args is
         end;
     begin
         -- Boucle d'obtention des paramètres
+        -- TODO: gérer si parameter non fourni
         loop
             case getopt("t: w: l: q: h: b: f:") is
                 when 't' =>
@@ -87,7 +88,7 @@ package body commandline_args is
         return to_string(f);
     end;
 
-    function get_option(option : string) return string is
+    function get_option(option : character) return string is
     begin
         if getopt(option & ":") /= option then
             raise argument_missing with option;
