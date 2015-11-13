@@ -62,7 +62,7 @@ package body svg_exporter is
             base_pos := (base_pos.x + float(halfbox.info.width) + 5.0, base_pos.y);
             
             append(svg_text, export_panel(halfbox.panel_right));
-            base_pos := (0.0, base_pos.y + float(halfbox.info.width) + 10.0);
+            base_pos := (0.0, base_pos.y + float(integer'max(halfbox.info.width, halfbox.info.height)) + 10.0);
 
             return to_string(svg_text);
         end;

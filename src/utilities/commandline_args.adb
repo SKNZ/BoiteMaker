@@ -1,5 +1,7 @@
 with gnat.command_line;
 use gnat.command_line;
+with ada.text_io;
+use ada.text_io;
 
 package body commandline_args is
     procedure initialize is
@@ -28,6 +30,7 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
+                    put("lol");
                 when others =>
                     exit;
             end case;
