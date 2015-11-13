@@ -18,7 +18,7 @@ package body box_info is
     -- l >= w
     -- l-2t, w-2t > 0
     -- b < h-2t
-    -- q <= l-2t
+    -- q <= w-4t (au moins une encoche; également pour le inner_panel, d'où le 4)
     procedure validate_box_measurements(box : box_info_t) is
     begin
         if not (box.thickness > 0) then
@@ -54,7 +54,7 @@ package body box_info is
         end if;
 
         if not (box.length - 2 * box.thickness > 0) then
-            raise invalid_args with "l - 2*t > 0";
+            raise invalid_args with "l - 2 * t > 0";
         end if;
 
         if not (box.width - 2 * box.thickness > 0) then
@@ -65,8 +65,8 @@ package body box_info is
             raise invalid_args with "b < h - 2 * t";
         end if;
 
-        if not (box.queue_length <= box.length - 2 * box.thickness) then
-            raise invalid_args with "q <= l - 2 * t";
+        if not (box.queue_length <= box.width - 4 * box.thickness) then
+            raise invalid_args with "q <= w - 4 * t";
         end if;
     end;
 
