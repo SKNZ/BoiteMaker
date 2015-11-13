@@ -232,8 +232,7 @@ package body halfbox_panel is
 
     function get_right_and_left_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t is
         -- position courante
-        -- POUR EVITER LES DEBORDEMENT (a débugger)
-        pos : point_t := (float(10 + thickness), 10.0);
+        pos : point_t := (float(thickness), 0.0);
 
         -- polygone dessiné par les mouvements du point
         polygon : node_ptr := create(pos);
@@ -295,9 +294,9 @@ package body halfbox_panel is
         -- Ajout des queues et des encoches en longueur
         add_queues(pos, last_point, queue_length, thickness, l_queue_count, mv_l_ptr, mv_d_ptr, mv_u_ptr, queue_first => true, first_move => false, last_move => true);
 
-        -- Marge de t à gauche pour les encoches
-        -- + l'autre moitié de la marge de centrage des encoches en longueur
-        mv_l(pos, float(thickness) + float(l_queue_margin) / 2.0);
+        -- Moitié de la marge de centrage des encoches en longueur
+        -- car la marge de t est donnée par add_queues
+        mv_l(pos, float(l_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
         -- Bord gauche de la face
@@ -311,8 +310,7 @@ package body halfbox_panel is
         add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => true, first_move => true, last_move => true);
 
         -- Marge de t en haut pour les encoches
-        -- + l'autre moitié de la marge de centrage des encoches en largeur 
-        mv_u(pos, float(thickness) + float(w_queue_margin) / 2.0);
+        mv_u(pos, float(thickness) + float(w_queue_margin));
         last_point := add_after(last_point, pos);
 
         -- On doit être revenu pos. 0,0
