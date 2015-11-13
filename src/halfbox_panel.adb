@@ -175,12 +175,12 @@ package body halfbox_panel is
         -- Bord haut de la face
         
         -- Le bord haut est un bord droit
-        mv_r(pos, length - 2 * thickness);   
+        mv_r(pos, length - 2 * thickness);
         last_point := add_after(last_point, pos);
 
 
         -- Bord droit de la face
-        
+
         -- Marge de t en haut pour les encoches 
         -- + la moitié de la marge de centrage des encoches en largeur 
         mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
