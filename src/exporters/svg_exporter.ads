@@ -14,7 +14,7 @@ package svg_exporter is
     svg_header : constant string :=
 "<svg version=""1.1""" & lf & 
 "     baseProfile=""full""" & lf & 
-"     width=""300"" height=""200""" & lf & 
+--"     width=""300"" height=""200""" & lf & 
 "     xmlns=""http://www.w3.org/2000/svg"">" & lf;
 
     svg_polygon_begin : constant string :=
