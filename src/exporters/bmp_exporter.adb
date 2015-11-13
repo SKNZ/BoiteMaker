@@ -3,4 +3,4 @@ package body bmp_exporter is
     begin
         null;
     end;
-end svg_exporter;
+end bmp_exporter;
