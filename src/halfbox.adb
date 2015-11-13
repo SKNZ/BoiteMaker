@@ -1,6 +1,8 @@
 with ada.characters.latin_1;
 with halfbox_panel;
 use halfbox_panel;
+with halfbox_info;
+use halfbox_info;
 
 package body halfbox is
     function get_halfbox(width, length, height, thickness, queue_length : integer) return halfbox_t is
