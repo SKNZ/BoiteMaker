@@ -7,7 +7,7 @@ with ada.characters.latin_1;
 package body halfbox_panel is
     -- Ajoute les queues et les encoches
     -- Impl. et doc plus bas
-    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr; queue_first, first_move, last_move : boolean);
+    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr; queue_first : boolean);
 
     -- Renvoie la face arrière ou avant de la demiboite 
     -- Impl. plus bas
@@ -59,7 +59,7 @@ package body halfbox_panel is
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en longueur
-        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, l_queue_count, mv_r_ptr, mv_u_ptr, mv_d_ptr, queue_first => false, first_move => true, last_move => true);
+        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, l_queue_count, mv_r_ptr, mv_u_ptr, mv_d_ptr, queue_first => false);
 
         -- Marge de t à droite pour les encoches
         -- + l'autre moitié de la marge de centrage des encoches en longueur
@@ -74,7 +74,7 @@ package body halfbox_panel is
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => false, first_move => false, last_move => true);
+        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => false);
 
         -- Marge de t en bas pour les encoches
         -- + l'autre moitié de la marge de centrage des encoches en largeur 
@@ -89,7 +89,7 @@ package body halfbox_panel is
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en longueur
-        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, l_queue_count, mv_l_ptr, mv_d_ptr, mv_u_ptr, queue_first => false, first_move => true, last_move => true);
+        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, l_queue_count, mv_l_ptr, mv_d_ptr, mv_u_ptr, queue_first => false);
 
         -- Marge de t à gauche pour les encoches
         -- + l'autre moitié de la marge de centrage des encoches en longueur
@@ -104,7 +104,7 @@ package body halfbox_panel is
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => false, first_move => false, last_move => true);
+        add_queues(pos, last_point, halfbox_info.queue_length, halfbox_info.thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => false);
 
         -- Marge de t en haut pour les encoches
         -- + l'autre moitié de la marge de centrage des encoches en largeur 
@@ -140,7 +140,7 @@ package body halfbox_panel is
 
     function get_front_and_back_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t is
         -- position courante
-        pos : point_t := (float(thickness), 0.0);
+        pos : point_t := (0.0, float(thickness));
 
         -- polygone dessiné par les mouvements du point
         polygon : node_ptr := create(pos);
@@ -174,40 +174,39 @@ package body halfbox_panel is
     begin
         -- Bord haut de la face
         
-        -- Le bord haut est un bord droit
-        mv_r(pos, length - 2 * thickness);
+        -- Marge de t à gauche pour les encoches
+        -- + la moitié de la marge de centrage des encoches en longueur
+        mv_r(pos, float(thickness) + float(l_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
+        -- Ajout des queues et des encoches en longueur
+        add_queues(pos, last_point, queue_length, thickness, l_queue_count, mv_r_ptr, mv_u_ptr, mv_d_ptr, queue_first => true);
 
+        -- Marge de t à droite pour les encoches
+        -- + l'autre moitié de la marge de centrage des encoches en longueur
+        mv_r(pos, float(thickness) + float(l_queue_margin) / 2.0);
+        last_point := add_after(last_point, pos);
+        
         -- Bord droit de la face
-
+        
         -- Marge de t en haut pour les encoches 
-        -- + la moitié de la marge de centrage des encoches en largeur 
+        -- + l'autre moitié de la marge de centrage des encoches en largeur 
         mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => false, first_move => true, last_move => false);
+        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => false);
 
         -- Marge de t en bas pour les encoches
         -- + l'autre moitié de la marge de centrage des encoches en largeur 
         mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
-
         -- Bord bas de la face
+        -- Le bord bas est un bord droit ("lisse")
         
-        -- Moitié de la marge de centrage des encoches en longueur
-        mv_l(pos, float(l_queue_margin) / 2.0);
+        mv_l(pos, float(length));
         last_point := add_after(last_point, pos);
-
-        -- Ajout des queues et des encoches en longueur
-        add_queues(pos, last_point, queue_length, thickness, l_queue_count, mv_l_ptr, mv_d_ptr, mv_u_ptr, queue_first => false, first_move => false, last_move => true);
-
-        -- L'autre moitié de la marge de centrage des encoches en longueur
-        mv_l(pos, float(l_queue_margin) / 2.0);
-        last_point := add_after(last_point, pos);
-        
 
         -- Bord gauche de la face
         
@@ -217,10 +216,10 @@ package body halfbox_panel is
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => false, first_move => false, last_move => true);
+        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => false);
 
         -- Marge de t en haut pour les encoches
-        -- + l'autre moitié de la marge de centrage des encoches en largeur 
+        -- + la moitié de la marge de centrage des encoches en largeur 
         mv_u(pos, float(thickness) + float(w_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
@@ -232,7 +231,7 @@ package body halfbox_panel is
 
     function get_right_and_left_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t is
         -- position courante
-        pos : point_t := (float(thickness), 0.0);
+        pos : point_t := (float(thickness), float(thickness));
 
         -- polygone dessiné par les mouvements du point
         polygon : node_ptr := create(pos);
@@ -266,51 +265,53 @@ package body halfbox_panel is
     begin
         -- Bord haut de la face
         
-        -- Le bord haut est un bord droit
-        mv_r(pos, length - 2 * thickness);   
-        last_point := add_after(last_point, pos);
-
-        -- Bord droit de la face
-        
-        -- Marge de t en haut pour les encoches 
-        mv_d(pos, float(thickness) + float(w_queue_margin));
-        last_point := add_after(last_point, pos);
-
-        -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => true, first_move => true, last_move => false);
-
-        -- Marge de t en bas pour les encoches
-        -- + l'autre moitié de la marge de centrage des encoches en largeur 
-        --mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
-        --last_point := add_after(last_point, pos);
-
-        -- Bord bas de la face
-        
-        -- Marge de t à droite pour les encoches
+        -- Marge de t à gauche pour les encoches
         -- + la moitié de la marge de centrage des encoches en longueur
-        mv_l(pos, float(thickness) + float(l_queue_margin) / 2.0);
+        mv_r(pos, float(thickness) + float(l_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en longueur
-        add_queues(pos, last_point, queue_length, thickness, l_queue_count, mv_l_ptr, mv_d_ptr, mv_u_ptr, queue_first => true, first_move => false, last_move => true);
+        add_queues(pos, last_point, queue_length, thickness, l_queue_count, mv_r_ptr, mv_u_ptr, mv_d_ptr, queue_first => true);
 
-        -- Moitié de la marge de centrage des encoches en longueur
-        -- car la marge de t est donnée par add_queues
-        mv_l(pos, float(l_queue_margin) / 2.0);
+        -- Marge de t à droite pour les encoches
+        -- + l'autre moitié de la marge de centrage des encoches en longueur
+        mv_r(pos, float(thickness) + float(l_queue_margin) / 2.0);
+        last_point := add_after(last_point, pos);
+        
+        -- Bord droit de la face
+        
+        -- Marge de t en haut pour les encoches 
+        -- + l'autre moitié de la marge de centrage des encoches en largeur 
+        mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
+        last_point := add_after(last_point, pos);
+
+        -- Ajout des queues et des encoches en largeur 
+        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_d_ptr, mv_r_ptr, mv_l_ptr, queue_first => true);
+
+        -- Marge de t en bas pour les encoches
+        -- + l'autre moitié de la marge de centrage des encoches en largeur 
+        mv_d(pos, float(thickness) + float(w_queue_margin) / 2.0);
+        last_point := add_after(last_point, pos);
+
+        -- Bord bas de la face
+        -- Le bord bas est un bord droit ("lisse")
+        
+        mv_l(pos, float(length));
         last_point := add_after(last_point, pos);
 
         -- Bord gauche de la face
         
         -- Marge de t en bas pour les encoches 
         -- + la moitié de la marge de centrage des encoches en largeur 
-        --mv_u(pos, float(thickness) + float(w_queue_margin) / 2.0);
-        --last_point := add_after(last_point, pos);
+        mv_u(pos, float(thickness) + float(w_queue_margin) / 2.0);
+        last_point := add_after(last_point, pos);
 
         -- Ajout des queues et des encoches en largeur 
-        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => true, first_move => true, last_move => true);
+        add_queues(pos, last_point, queue_length, thickness, w_queue_count, mv_u_ptr, mv_l_ptr, mv_r_ptr, queue_first => true);
 
         -- Marge de t en haut pour les encoches
-        mv_u(pos, float(thickness) + float(w_queue_margin));
+        -- + la moitié de la marge de centrage des encoches en largeur 
+        mv_u(pos, float(thickness) + float(w_queue_margin) / 2.0);
         last_point := add_after(last_point, pos);
 
         -- On doit être revenu pos. 0,0
@@ -329,19 +330,8 @@ package body halfbox_panel is
     -- mv_queue : fonction de mouvement pour une queue
     -- mv_encoche : fonction de mouvement pour une encoche
     -- queue_first : si on commence par une queue
-    -- first_move : si le premier mouvement est mv_queue si queue_first (ou mv_socket sinon)
-    -- last_move : si le dernier mouvement est mv_queue si queue_first (ou mv_socket sinon)
-    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr; queue_first, first_move, last_move : boolean) is
+    procedure add_queues(pos : in out point_t; last_point : in out node_ptr; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_ptr; queue_first : boolean) is
     begin
-        -- first_move
-        --if first_move then
-        --    if queue_first then
-        --        mv_queue(pos, float(queue_width));
-        --    else
-        --        mv_socket(pos, float(queue_width));
-        --    end if;
-        --end if;
-
         for i in 1 .. queue_count loop
             -- permet de commencer par une encoche ou une queue
             if i mod 2 = boolean'pos(queue_first) mod 2 then
@@ -359,15 +349,12 @@ package body halfbox_panel is
             end if;
         end loop;
 
-        -- last_move
-        if last_move then
-            if queue_first then
-                mv_socket(pos, float(queue_width));
-            else
-                mv_queue(pos, float(queue_width));
-            end if;
-            last_point := add_after(last_point, pos);
+        if queue_first then
+            mv_socket(pos, float(queue_width));
+        else
+            mv_queue(pos, float(queue_width));
         end if;
+        last_point := add_after(last_point, pos);
     end;
 
     function to_string(panel : halfbox_panel_t) return string is
