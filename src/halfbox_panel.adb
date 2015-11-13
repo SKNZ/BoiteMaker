@@ -51,6 +51,14 @@ package body halfbox_panel is
         -- marge à répartir pour centrer les encoches en largeur
         w_queue_margin : integer := w_queue_space - w_queue_count * halfbox_info.queue_length;
     begin
+        -- Si possible, réduction du nombre d'encoches à mettre en largeur
+        -- pour éviter des "cassures" physiques du coin d'une face
+        if halfbox_info.width = 2 * halfbox_info.thickness + w_queue_count * halfbox_info.queue_length and w_queue_count >= 3 then
+            w_queue_count := w_queue_count - 2;
+            -- L'espace manquant est compensé dans la marge
+            w_queue_margin := w_queue_margin + 2 * halfbox_info.queue_length;
+        end if;
+
         -- Bord haut de la face
         
         -- Marge de t à gauche pour les encoches
@@ -263,6 +271,14 @@ package body halfbox_panel is
         -- marge à répartir pour centrer les encoches en largeur
         w_queue_margin : integer := w_queue_space - w_queue_count * queue_length;
     begin
+        -- Si possible, réduction du nombre d'encoches à mettre sur la face du haut
+        -- pour éviter des "cassures" physiques du coin de la face inférieure
+        if length = 2 * thickness + l_queue_count * queue_length and l_queue_count >= 3 then
+            l_queue_count := l_queue_count - 2;
+            -- L'espace manquant est compensé dans la marge
+            l_queue_margin := l_queue_margin + 2 * queue_length;
+        end if;
+
         -- Bord haut de la face
         
         -- Marge de t à gauche pour les encoches
