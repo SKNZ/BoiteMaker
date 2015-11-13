@@ -4,11 +4,11 @@ use ada.characters.latin_1;
 package body box_info is
     function initialize_box(t, w, l, h, q, b : integer) return box_info_t is
         box : box_info_t := (thickness => t,
-                    height => h,
-                    width => w,
-                    length => l,
-                    queue_length => q,
-                    inner_height => b);
+                                height => h,
+                                width => w,
+                                length => l,
+                                queue_length => q,
+                                inner_height => b);
     begin
         return box;
     end;
@@ -21,20 +21,52 @@ package body box_info is
     -- q <= l-2t
     procedure validate_box_measurements(box : box_info_t) is
     begin
-        if not(box.thickness > 0 
-            and box.length > 0 
-            and box.width > 0 
-            and box.queue_length > 0 
-            and box.height > 0 
-            and box.inner_height > 0 
-            and box.queue_length > 0 
-            and box.length >= box.width
-            and box.length-2*box.thickness > 0 
-            and box.width-2*box.thickness > 0 
-            and box.inner_height < box.height-2*box.thickness 
-            and box.queue_length <= box.length-2*box.thickness)
-        then
-            raise invalid_args;
+        if not (box.thickness > 0) then
+            raise invalid_args with "t > 0";
+        end if;
+
+        if not (box.length > 0) then
+            raise invalid_args with "l > 0";
+        end if;
+
+        if not (box.width > 0) then
+            raise invalid_args with "w > 0";
+        end if;
+
+        if not (box.queue_length > 0) then
+            raise invalid_args with "q > 0";
+        end if;
+
+        if not (box.height > 0) then
+            raise invalid_args with "h > 0";
+        end if;
+
+        if not (box.inner_height > 0) then
+            raise invalid_args with "b > 0";
+        end if;
+
+        if not (box.queue_length > 0) then
+            raise invalid_args with "q > 0";
+        end if;
+
+        if not (box.length >= box.width) then
+            raise invalid_args with "l >= w";
+        end if;
+
+        if not (box.length - 2 * box.thickness > 0) then
+            raise invalid_args with "l - 2*t > 0";
+        end if;
+
+        if not (box.width - 2 * box.thickness > 0) then
+            raise invalid_args with "w - 2 * t > 0";
+        end if;
+
+        if not (box.inner_height < box.height - 2 * box.thickness) then
+            raise invalid_args with "b < h - 2 * t";
+        end if;
+
+        if not (box.queue_length <= box.length - 2 * box.thickness) then
+            raise invalid_args with "q <= l - 2 * t";
         end if;
     end;
 

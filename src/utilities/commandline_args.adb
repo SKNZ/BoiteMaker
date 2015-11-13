@@ -30,7 +30,6 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
-                    put("lol");
                 when others =>
                     exit;
             end case;
