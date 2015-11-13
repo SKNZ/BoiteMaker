@@ -38,6 +38,7 @@ begin
 
     -- Export de la boîte générée
     put_line(to_string(box_parts));
+    exporter.export(box_parts);
 exception
     -- Argument manquant
     when e: argument_missing =>
