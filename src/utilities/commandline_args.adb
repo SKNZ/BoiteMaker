@@ -110,13 +110,13 @@ package body commandline_args is
         return to_string(border_color);
     end;
 
-    -- obtient le paramètre border
+    -- obtient le paramètre help
     function get_show_help return boolean is
     begin
         return show_help;
     end;
 
-    -- obtient le paramètre border
+    -- obtient le paramètre debug
     function get_show_debug return boolean is
     begin
         return show_debug;
