@@ -8,6 +8,8 @@ with halfbox_panel;
 use halfbox_panel;
 with halfbox;
 use halfbox;
+with logger;
+use logger;
 
 package body svg is
     function get_svg(box : box_parts_t; input_border_color, input_fill_color : string) return string is
@@ -67,13 +69,17 @@ package body svg is
             return to_string(svg_text);
         end;
     begin
+        debug("Export en svg");
+
         -- selected_fill_color est init. avec input_fill_color pour valeur
         if length(selected_fill_color) = 0 then
+            debug("Pas de couleur de remplissage. Default: " & default_fill_color);
             selected_fill_color := to_unbounded_string(default_fill_color);
         end if;
 
         -- selected_border_color est init. avec input_border_color pour valeur
         if length(selected_border_color) = 0 then
+            debug("Pas de couleur de bordure. Default: " & default_border_color);
             selected_border_color := to_unbounded_string(default_border_color);
         end if;
 

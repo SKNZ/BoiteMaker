@@ -27,7 +27,7 @@ begin
     -- Lecture des arguments de la ligne de commande
     commandline_args.initialize;
 
-    set_show_debug(get_show_debug);
+    logger.initialize(get_show_debug, get_log_file);
     debug("BoiteMaker started");
     
     if get_show_help then
@@ -43,7 +43,9 @@ begin
     -- Obtention des différens morceaux de la boîte
     box_parts := get_parts(box_info); 
 
-    debug(to_string(box_parts));
+    -- Trop long, log trop verbeux
+    -- Potentiellement pertinent
+    -- debug(to_string(box_parts));
 
     -- Export de la boîte générée
     declare

@@ -13,7 +13,7 @@ package body commandline_args is
         -- Boucle d'obtention des paramètres
         -- TODO: gérer si parameter non fourni
         loop
-            case getopt("t: w: l: q: h: b: f: r: -fill: -border: -debug -help") is
+            case getopt("t: w: l: q: h: b: f: r: -fill: -border: -show-debug -log: -help") is
                 when 't' =>
                     t := integer'value(parameter);
                 when 'w' =>
@@ -35,8 +35,10 @@ package body commandline_args is
                         border_color := to_unbounded_string(parameter);
                     elsif full_switch = "-help" then
                         show_help := true;
-                    elsif full_switch = "-debug" then
+                    elsif full_switch = "-show-debug" then
                         show_debug := true;
+                    elsif full_switch = "-log" then
+                        log_file := to_unbounded_string(parameter);
                     end if; 
                 when others =>
                     exit;
@@ -110,15 +112,21 @@ package body commandline_args is
         return to_string(border_color);
     end;
 
-    -- obtient le paramètre border
+    -- obtient le paramètre help 
     function get_show_help return boolean is
     begin
         return show_help;
     end;
 
-    -- obtient le paramètre border
+    -- obtient le paramètre debug 
     function get_show_debug return boolean is
     begin
         return show_debug;
+    end;
+    
+    -- obtient le paramètre log 
+    function get_log_file return string is
+    begin
+        return to_string(log_file);
     end;
 end commandline_args;
