@@ -1,13 +1,20 @@
 with ada.characters.latin_1;
+with logger;
+use logger;
 
 package body halfbox is
     function get_halfbox(width, length, height, thickness, queue_length : integer) return halfbox_t is
+        -- On stock les informations relatives à la demi boîte avec celles-ci
+        -- Au cas où on en aurait besoin ultérieurement si l'on souhaite rajouter
+        -- des étapes au processus
         halfbox_info : constant halfbox_info_t := (width => width,
             length => length,
             height => height,
             thickness => thickness,
             queue_length => queue_length);
 
+        -- On génère chacune des panneaux de la demi-boîte
+        -- A partir des informations de la demi-boîte
         halfbox : constant halfbox_t := (
             info => halfbox_info,
             panel_bottom => get_bottom_panel(halfbox_info),
@@ -16,6 +23,9 @@ package body halfbox is
             panel_left => get_left_panel(halfbox_info),
             panel_right => get_right_panel(halfbox_info));
     begin
+        debug("Génération d'une demi boîte");
+        debug(to_string(halfbox_info));
+
         return halfbox; 
     end;
 

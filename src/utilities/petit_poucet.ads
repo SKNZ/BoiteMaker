@@ -32,25 +32,25 @@ package petit_poucet is
     -- Garantit: 0 <= coords <= infini
     -- Exception: invalid_pos si coords < 0
     procedure mv_l(poucet : in out petit_poucet_t; delta_x : float);
-    procedure mv_l(poucet : in out petit_poucet_t; delta_x : integer);
+    -- procedure mv_l(poucet : in out petit_poucet_t; delta_x : integer);
 
     -- Deplace le petit poucet de delta_x vers la droite 
     -- Garantit: 0 <= coords <= infini
     -- Exception: invalid_pos si coords < 0
     procedure mv_r(poucet : in out petit_poucet_t; delta_x : float);
-    procedure mv_r(poucet : in out petit_poucet_t; delta_x : integer);
+    -- procedure mv_r(poucet : in out petit_poucet_t; delta_x : integer);
     
     -- Deplace le petit poucet de delta_y vers le haut
     -- Garantit: 0 <= coords <= infini
     -- Exception: invalid_pos si coords < 0
     procedure mv_u(poucet : in out petit_poucet_t; delta_y : float);
-    procedure mv_u(poucet : in out petit_poucet_t; delta_y : integer);
+    -- procedure mv_u(poucet : in out petit_poucet_t; delta_y : integer);
 
     -- Deplace le petit poucet de delta_y vers le bas 
     -- Garantit: 0 <= coords <= infini
     -- Exception: invalid_pos si coords < 0
     procedure mv_d(poucet : in out petit_poucet_t; delta_y : float);
-    procedure mv_d(poucet : in out petit_poucet_t; delta_y : integer);
+    -- procedure mv_d(poucet : in out petit_poucet_t; delta_y : integer);
 
     -- Type décrivant un pointeur de fonction
     -- vers une procédure de mv de poucet

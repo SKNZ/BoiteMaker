@@ -3,23 +3,15 @@ with point_list;
 use point_list;
 with point;
 use point;
-with petit_poucet;
-use petit_poucet;
+with logger;
+use logger;
+
+-- ATTENTION: dans ce fichier, le terme "queue" est équivalent à "queue et encoche"
+-- exemple: la fonction add_queues ajoue queues ET encoches.
 
 package body halfbox_panel is
-    -- Ajoute les queues et les encoches
-    -- Impl. et doc plus bas
-    procedure add_queues(poucet : in out petit_poucet_t; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_poucet_ptr; queue_first : boolean);
-
-    -- Renvoie la face arrière ou avant de la demiboite 
-    -- Impl. plus bas
-    function get_front_and_back_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t;
-
-    -- Renvoie la face droite ou gauche de la demiboite
-    -- Impl. plus bas
-    function get_right_and_left_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t;
-
     function get_bottom_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
+        -- Petit poucet pour tracer la face
         poucet : petit_poucet_t := get_petit_poucet((0.0, 0.0));
 
         -- espace dispo pour les encoches en longueur
@@ -46,9 +38,14 @@ package body halfbox_panel is
         -- marge à répartir pour centrer les encoches en largeur
         w_queue_margin : integer := w_queue_space - w_queue_count * halfbox_info.queue_length;
     begin
+        debug("Génération de la face du fond");
+        debug("Marge calculée en longueur: " & integer'image(l_queue_margin));
+        debug("Marge calculée en largeur: " & integer'image(w_queue_margin));
+        
         -- Si possible, réduction du nombre d'encoches à mettre en largeur
         -- pour éviter des "cassures" physiques du coin d'une face
         if halfbox_info.width = 2 * halfbox_info.thickness + w_queue_count * halfbox_info.queue_length and w_queue_count >= 3 then
+            debug("Réduction du nombre d'encoches en largeur de 2");
             w_queue_count := w_queue_count - 2;
             -- L'espace manquant est compensé dans la marge
             w_queue_margin := w_queue_margin + 2 * halfbox_info.queue_length;
@@ -113,27 +110,32 @@ package body halfbox_panel is
     
     function get_back_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
     begin
+        debug("Génération de la face de derrière");
         return get_front_and_back_panel(halfbox_info.length, halfbox_info.height, halfbox_info.thickness, halfbox_info.queue_length);
     end;
 
     function get_front_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
     begin
+        debug("Génération de la face de devant");
         return get_front_and_back_panel(halfbox_info.length, halfbox_info.height, halfbox_info.thickness, halfbox_info.queue_length);
     end;
 
     function get_right_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
     begin
+        debug("Génération de la face de droite");
         return get_right_and_left_panel(halfbox_info.width, halfbox_info.height, halfbox_info.thickness, halfbox_info.queue_length);
     end;
 
     function get_left_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
     begin
+        debug("Génération de la face de gauche");
         return get_right_and_left_panel(halfbox_info.width, halfbox_info.height, halfbox_info.thickness, halfbox_info.queue_length);
     end;
 
 
     function get_front_and_back_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t is
-        -- position courante
+        -- poucet de tracer de la face 
+        -- commence directement à 0;t
         poucet : petit_poucet_t := get_petit_poucet((0.0, float(thickness)));
 
         -- espace dispo pour les encoches en longueur
@@ -160,6 +162,9 @@ package body halfbox_panel is
         -- marge à répartir pour centrer les encoches en largeur
         w_queue_margin : constant integer := w_queue_space - w_queue_count * queue_length;
     begin
+        debug("Marge calculée en longueur: " & integer'image(l_queue_margin));
+        debug("Marge calculée en largeur: " & integer'image(w_queue_margin));
+
         -- Bord haut de la face
         
         -- Marge de t à gauche pour les encoches
@@ -204,14 +209,15 @@ package body halfbox_panel is
         -- + la moitié de la marge de centrage des encoches en largeur 
         mv_u(poucet, float(thickness) + float(w_queue_margin) / 2.0);
 
-        -- On doit être revenu pos. 0,0
+        -- On doit être revenu pos. 0,t
 
         return (polygon => get_points(poucet));
     end;
 
 
     function get_right_and_left_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t is
-        -- position courante
+        -- poucet de tracer de la face 
+        -- commence directement à t;t
         poucet : petit_poucet_t := get_petit_poucet((float(thickness), float(thickness)));
 
         -- espace dispo pour les encoches en longueur
@@ -238,6 +244,9 @@ package body halfbox_panel is
         -- marge à répartir pour centrer les encoches en largeur
         w_queue_margin : constant integer := w_queue_space - w_queue_count * queue_length;
     begin
+        debug("Marge calculée en longueur: " & integer'image(l_queue_margin));
+        debug("Marge calculée en largeur: " & integer'image(w_queue_margin));
+
         -- Si possible, réduction du nombre d'encoches à mettre sur la face du haut
         -- pour éviter des "cassures" physiques du coin de la face inférieure
         if length = 2 * thickness + l_queue_count * queue_length and l_queue_count >= 3 then
@@ -289,7 +298,7 @@ package body halfbox_panel is
         -- + la moitié de la marge de centrage des encoches en largeur 
         mv_u(poucet, float(thickness) + float(w_queue_margin) / 2.0);
 
-        -- On doit être revenu pos. 0,0
+        -- On doit être revenu pos. t,t
 
         return (polygon => get_points(poucet));
     end;
@@ -306,6 +315,9 @@ package body halfbox_panel is
     -- queue_first : si on commence par une queue
     procedure add_queues(poucet : in out petit_poucet_t; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_poucet_ptr; queue_first : boolean) is
     begin
+        debug("Ajout des queues et des encoches.");
+        debug("Commence queue: " & boolean'image(queue_first) & ". Nombre:" & integer'image(queue_count));
+
         for i in 1 .. queue_count loop
             -- permet de commencer par une encoche ou une queue
             if i mod 2 = boolean'pos(queue_first) mod 2 then

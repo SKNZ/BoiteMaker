@@ -1,6 +1,8 @@
 with point_list;
 with halfbox_info;
 use halfbox_info;
+with petit_poucet;
+use petit_poucet;
 
 package halfbox_panel is
     type halfbox_panel_t is
@@ -26,4 +28,15 @@ package halfbox_panel is
 
     -- Renvoie une représentation texte de la face
     function to_string(panel : halfbox_panel_t) return string;
+    
+    private
+
+    -- Ajoute les queues et les encoches
+    procedure add_queues(poucet : in out petit_poucet_t; queue_length, queue_width, queue_count : integer; mv_line, mv_queue, mv_socket : mv_poucet_ptr; queue_first : boolean);
+
+    -- Renvoie la face arrière ou avant de la demiboite 
+    function get_front_and_back_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t;
+
+    -- Renvoie la face droite ou gauche de la demiboite
+    function get_right_and_left_panel(length, width, thickness, queue_length : integer) return halfbox_panel_t;
 end halfbox_panel;
