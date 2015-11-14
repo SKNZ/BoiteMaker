@@ -7,38 +7,21 @@ package point is
             x, y : float := 0.0;
         end record;
 
+    -- Bouge le point sur l'axe x
+    procedure mv_x(point : in out point_t; delta_x : float);
+
+    -- Bouge le point sur l'axe y
+    procedure mv_y(point : in out point_t; delta_y : float);
+
+    -- Pointeur de fonction vers une fonction de mv_*
+    type mv_point_ptr is access procedure (point : in out point_t; delta_axis : float);
+
+    -- Constantes pour les pointeurs de fonctions
+    mv_x_ptr : constant mv_point_ptr := mv_x'access;
+    mv_y_ptr : constant mv_point_ptr := mv_y'access;
+    
     -- Représentation en texte du point
     function to_string(point : point_t) return string;
 
-    -- Deplace le point de delta_x vers la gauche
-    -- Garantit: 0 <= coords <= infini
-    -- Exception: invalid_pos si coords < 0
-    procedure mv_l(point : in out point_t; delta_x : float);
-    procedure mv_l(point : in out point_t; delta_x : integer);
-
-    -- Deplace le point de delta_x vers la droite 
-    -- Garantit: 0 <= coords <= infini
-    -- Exception: invalid_pos si coords < 0
-    procedure mv_r(point : in out point_t; delta_x : float);
-    procedure mv_r(point : in out point_t; delta_x : integer);
-    
-    -- Deplace le point de delta_x vers le haut
-    -- Garantit: 0 <= coords <= infini
-    -- Exception: invalid_pos si coords < 0
-    procedure mv_u(point : in out point_t; delta_y : float);
-    procedure mv_u(point : in out point_t; delta_y : integer);
-
-    -- Deplace le point de delta_x vers le bas 
-    -- Garantit: 0 <= coords <= infini
-    -- Exception: invalid_pos si coords < 0
-    procedure mv_d(point : in out point_t; delta_y : float);
-    procedure mv_d(point : in out point_t; delta_y : integer);
-
-    -- Type décrivant un pointeur de fonction vers une procédure de mv
-    type mv_ptr is access procedure (point : in out point_t; delta_axis : float);
-
-    mv_l_ptr : constant mv_ptr := mv_l'access;
-    mv_r_ptr : constant mv_ptr := mv_r'access;
-    mv_u_ptr : constant mv_ptr := mv_u'access;
-    mv_d_ptr : constant mv_ptr := mv_d'access;
+    private
 end point;
