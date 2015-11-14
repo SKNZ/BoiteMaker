@@ -6,6 +6,9 @@ use point;
 with logger;
 use logger;
 
+-- ATTENTION: dans ce fichier, le terme "queue" est équivalent à "queue et encoche"
+-- exemple: la fonction add_queues ajoue queues ET encoches.
+
 package body halfbox_panel is
     function get_bottom_panel(halfbox_info : halfbox_info_t) return halfbox_panel_t is
         -- Petit poucet pour tracer la face
