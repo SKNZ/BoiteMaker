@@ -24,6 +24,10 @@ procedure boites is
 begin
     -- Lecture des arguments de la ligne de commande
     commandline_args.initialize;
+
+    if get_show_help then
+        put("ICI L'AIDE");
+    end if;
     
     -- Construction de l'objet portant les informations de la boîte
     box_info := initialize_box(get_t, get_w, get_l, get_h, get_q, get_b);
