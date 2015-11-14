@@ -40,6 +40,8 @@ package commandline_args is
     -- Obtient le paramètre show_help
     function get_show_help return boolean;
 
+    -- Obtient le paramètre show_help
+    function get_show_debug return boolean;
 private
     -- Constante définissant l'état non initialise
     int_no_value : constant integer := -1;
@@ -47,5 +49,5 @@ private
     -- Les paramètres de l'application
     t, l, w, q, h, b : integer := int_no_value;
     f, border_color, fill_color : unbounded_string := null_unbounded_string;
-    show_help : boolean;
+    show_help, show_debug : boolean;
 end commandline_args;

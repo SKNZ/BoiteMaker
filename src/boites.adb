@@ -17,6 +17,8 @@ with svg;
 use svg;
 with text_file_writer;
 use text_file_writer;
+with logger;
+use logger;
 
 procedure boites is
     box_info : box_info_t;
@@ -25,6 +27,9 @@ begin
     -- Lecture des arguments de la ligne de commande
     commandline_args.initialize;
 
+    set_show_debug(get_show_debug);
+    debug("BoiteMaker started");
+    
     if get_show_help then
         put("ICI L'AIDE");
     end if;
@@ -38,6 +43,8 @@ begin
     -- Obtention des différens morceaux de la boîte
     box_parts := get_parts(box_info); 
 
+    debug(to_string(box_parts));
+
     -- Export de la boîte générée
     declare
         svg : constant string := get_svg(box_parts, get_border_color, get_fill_color);
@@ -48,6 +55,7 @@ begin
 exception
     -- Argument manquant
     when e: argument_missing =>
+        debug("argument_missing raised: " & exception_message(e));
         put_line("Un argument est manquant: "
             & exception_message(e));
 
@@ -55,6 +63,7 @@ exception
         set_exit_status(1);
     -- Argument invalide
     when e: invalid_args =>
+        debug("argument_missing raised: " & exception_message(e));
         put_line("Vos argument ne respectaient pas la contrainte suivante: "
             & exception_message(e));
 
