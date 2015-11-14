@@ -1,7 +1,5 @@
 with gnat.command_line;
 use gnat.command_line;
-with ada.text_io;
-use ada.text_io;
 
 package body commandline_args is
     procedure initialize is
@@ -100,14 +98,5 @@ package body commandline_args is
         else
             return to_string(r);
         end if;
-    end;
-
-    function get_option(option : character; default : string) return string is
-    begin
-        if getopt(option & ":") /= option then
-            return default;
-        end if;
-
-        return parameter;
     end;
 end commandline_args;

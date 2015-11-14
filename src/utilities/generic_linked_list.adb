@@ -8,7 +8,7 @@ package body generic_linked_list is
     procedure node_unchecked_deallocation is new ada.unchecked_deallocation(node_t, node_ptr);
 
     function create(element : element_t) return node_ptr is
-        node : node_ptr := new node_t;
+        node : constant node_ptr := new node_t;
     begin
         node.all := (element => element, next_node => null);
         return node; 
@@ -21,7 +21,7 @@ package body generic_linked_list is
     end;
 
     procedure add_after(node : node_ptr; element : element_t) is
-        new_node : node_ptr := new node_t;
+        new_node : constant node_ptr := new node_t;
     begin
         new_node.all := (element => element, next_node => null);
         node.next_node := new_node;
@@ -72,7 +72,7 @@ package body generic_linked_list is
     function to_string(node : node_ptr; to_string : to_string_function_t) return string is
         -- Helper de récursion permettant la génération de la chaine pour le to_string
         function to_string_helper(node : node_ptr; to_string : to_string_function_t) return string is
-            s : string := ada.characters.latin_1.HT & to_string.all(elem(node));
+            s : constant string := ada.characters.latin_1.HT & to_string.all(elem(node));
         begin
             if has_next(node) then
                 return s

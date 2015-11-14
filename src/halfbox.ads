@@ -1,5 +1,3 @@
-with point_list;
-use point_list;
 with halfbox_panel;
 use halfbox_panel;
 with halfbox_info;

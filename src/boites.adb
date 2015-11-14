@@ -3,8 +3,6 @@ with ada.command_line;
 use ada.command_line;
 with ada.exceptions;
 use ada.exceptions;
-with ada.integer_text_io;
-use ada.integer_text_io;
 with ada.text_io;
 use ada.text_io;
 
@@ -13,12 +11,12 @@ with commandline_args;
 use commandline_args;
 with box_info;
 use box_info;
-with halfbox;
-use halfbox;
 with box_parts;
 use box_parts;
-with exporter;
-use exporter;
+with svg;
+use svg;
+with text_file_writer;
+use text_file_writer;
 
 procedure boites is
     box_info : box_info_t;
@@ -37,8 +35,12 @@ begin
     box_parts := get_parts(box_info); 
 
     -- Export de la boîte générée
-    put_line(to_string(box_parts));
-    exporter.export(box_parts);
+    declare
+        svg : constant string := get_svg(box_parts);
+    begin
+        -- Ecriture du fichier svg
+        write_string_to_file(get_f, svg);
+    end;
 exception
     -- Argument manquant
     when e: argument_missing =>
@@ -54,13 +56,6 @@ exception
 
         -- Indication au shell d'un status d'erreur
         set_exit_status(2);
-    -- Format d'export inconnu
-    when e: unknown_format =>
-        put_line("Le format d'export demandé n'est pas reconnu: "
-            & exception_message(e));
-
-        -- Indication au shell d'un status d'erreur
-        set_exit_status(3);
 end;
 
 -- TU halfbox

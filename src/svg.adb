@@ -8,15 +8,9 @@ with halfbox_panel;
 use halfbox_panel;
 with halfbox;
 use halfbox;
-with text_file_writer;
-use text_file_writer;
-with exporter;
-use exporter;
-with ada.text_io;
-use ada.text_io;
 
-package body svg_exporter is
-    procedure export(box : box_parts_t) is
+package body svg is
+    function get_svg(box : box_parts_t) return string is
         base_pos : point_t;
 
         function export_polygon(polygon : point_list.node_ptr) return unbounded_string is
@@ -57,36 +51,19 @@ package body svg_exporter is
             base_pos := (base_pos.x + float(halfbox.info.length) + 5.0, base_pos.y);
 
             append(svg_text, export_panel(halfbox.panel_left));
-            base_pos := (base_pos.x + float(halfbox.info.width) + 5.0, base_pos.y);
+            base_pos := (base_pos.x + float(halfbox.info.width) + 10.0, base_pos.y);
             
             append(svg_text, export_panel(halfbox.panel_right));
             base_pos := (0.0, base_pos.y + float(integer'max(halfbox.info.width, halfbox.info.height)) + 10.0);
 
             return to_string(svg_text);
         end;
-
-        svg_text : string :=
+    begin
+        return
             svg_header
             & export_halfbox(box.lower_halfbox)
             & export_halfbox(box.inner_halfbox)
             & export_halfbox(box.upper_halfbox)
             & svg_footer;
-
-        option_text : string := get_option('d', "file");
-        exporter_dest : exporter_dest_t;
-    begin
-        begin
-            exporter_dest := exporter_dest_t'value(option_text);
-        exception
-            when constraint_error =>
-                raise unknown_format with option_text;
-        end;
-
-        case exporter_dest is
-            when file =>
-                write_string_to_file(get_f, svg_text);
-            when console =>
-                put(svg_text);
-        end case;
     end;
-end svg_exporter;
+end svg;

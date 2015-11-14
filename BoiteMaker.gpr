@@ -1,5 +1,5 @@
 project BoiteMaker is
-    for Source_Dirs use ("src", "src/utilities", "src/exporters");
+    for Source_Dirs use ("src", "src/utilities");
     for Object_Dir use "obj";
     for Exec_Dir use "bin";
     for Main use ("boites");
@@ -10,6 +10,6 @@ project BoiteMaker is
 
     package Compiler is
         for Default_Switches ("Ada")
-            use ("-gnato", "-fstack-check", "-gnat05");
+            use ("-gnatwa", "-gnato", "-fstack-check", "-gnat05");
     end Compiler;
 end BoiteMaker;

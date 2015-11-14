@@ -34,8 +34,6 @@ package commandline_args is
     -- Obtient le paramètre r
     function get_r return string;
 
-    -- Obtient une option autre que les options prévues par défaut 
-    function get_option(option : character; default : string) return string;
 private
     -- Constante définissant l'état non initialise
     int_no_value : constant integer := -1;

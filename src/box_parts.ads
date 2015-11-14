@@ -1,5 +1,3 @@
-with point;
-use point;
 with box_info;
 use box_info;
 with halfbox;

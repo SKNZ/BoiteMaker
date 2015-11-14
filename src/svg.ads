@@ -4,9 +4,9 @@ use box_parts;
 with commandline_args;
 use commandline_args;
 
-package svg_exporter is
+package svg is
     -- exporte la boite au format svg
-    procedure export(box : box_parts_t);
+    function get_svg(box : box_parts_t) return string;
 
     private
 
@@ -29,4 +29,4 @@ package svg_exporter is
         """/>" & lf;
 
     svg_footer : constant string := "</svg>";
-end svg_exporter;
+end svg;
