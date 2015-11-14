@@ -13,7 +13,7 @@ package body commandline_args is
         -- Boucle d'obtention des paramètres
         -- TODO: gérer si parameter non fourni
         loop
-            case getopt("t: w: l: q: h: b: f: r:") is
+            case getopt("t: w: l: q: h: b: f: r: -fill: -border: -help") is
                 when 't' =>
                     t := integer'value(parameter);
                 when 'w' =>
@@ -28,8 +28,14 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
-                when 'r' =>
-                    r := to_unbounded_string(parameter);
+                when '-' =>
+                    if full_switch = "-fill" then
+                        fill_color := to_unbounded_string(parameter);
+                    elsif full_switch = "-border" then
+                        border_color := to_unbounded_string(parameter);
+                    elsif full_switch = "-help" then
+                        show_help := true;
+                    end if; 
                 when others =>
                     exit;
             end case;
@@ -90,13 +96,21 @@ package body commandline_args is
         return to_string(f);
     end;
 
-    -- obtient le paramètre r
-    function get_r return string is
+    -- obtient le paramètre fill
+    function get_fill_color return string is
     begin
-        if r = null_unbounded_string then
-            return "white";
-        else
-            return to_string(r);
-        end if;
+        return to_string(fill_color);
+    end;
+
+    -- obtient le paramètre border
+    function get_border_color return string is
+    begin
+        return to_string(border_color);
+    end;
+
+    -- obtient le paramètre border
+    function get_show_help return boolean is
+    begin
+        return show_help;
     end;
 end commandline_args;

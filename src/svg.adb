@@ -10,11 +10,19 @@ with halfbox;
 use halfbox;
 
 package body svg is
-    function get_svg(box : box_parts_t) return string is
+    function get_svg(box : box_parts_t; input_border_color, input_fill_color : string) return string is
         base_pos : point_t;
 
+        selected_fill_color : unbounded_string := to_unbounded_string(input_fill_color);
+        selected_border_color : unbounded_string := to_unbounded_string(input_border_color);
+
         function export_polygon(polygon : point_list.node_ptr) return unbounded_string is
-            svg_text : unbounded_string := to_unbounded_string(svg_polygon_begin & get_r & svg_polygon_end_style);
+            svg_text : unbounded_string := to_unbounded_string(svg_polygon_begin)
+                & selected_border_color
+                & svg_polygon_fill_style
+                & selected_fill_color
+                & svg_polygon_end_style;
+
             curr_point : point_list.node_ptr := polygon;
             curr_pos : point_t;
         begin
@@ -39,9 +47,9 @@ package body svg is
         end;
 
         function export_halfbox (halfbox : halfbox_t) return string is
-            svg_text : unbounded_string := to_unbounded_string("");
+            svg_text : unbounded_string;
         begin
-            append(svg_text, export_panel(halfbox.panel_bottom));
+            svg_text := export_panel(halfbox.panel_bottom);
             base_pos := (base_pos.x + float(halfbox.info.length) + 5.0, base_pos.y);
 
             append(svg_text, export_panel(halfbox.panel_front));
@@ -59,6 +67,16 @@ package body svg is
             return to_string(svg_text);
         end;
     begin
+        -- selected_fill_color est init. avec input_fill_color pour valeur
+        if length(selected_fill_color) = 0 then
+            selected_fill_color := to_unbounded_string(default_fill_color);
+        end if;
+
+        -- selected_border_color est init. avec input_border_color pour valeur
+        if length(selected_border_color) = 0 then
+            selected_border_color := to_unbounded_string(default_border_color);
+        end if;
+
         return
             svg_header
             & export_halfbox(box.lower_halfbox)

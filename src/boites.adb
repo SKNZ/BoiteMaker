@@ -36,7 +36,7 @@ begin
 
     -- Export de la boîte générée
     declare
-        svg : constant string := get_svg(box_parts);
+        svg : constant string := get_svg(box_parts, get_border_color, get_fill_color);
     begin
         -- Ecriture du fichier svg
         write_string_to_file(get_f, svg);
