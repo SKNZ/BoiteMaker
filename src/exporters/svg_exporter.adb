@@ -10,8 +10,6 @@ with halfbox;
 use halfbox;
 with text_file_writer;
 use text_file_writer;
-with commandline_args;
-use commandline_args;
 with exporter;
 use exporter;
 with ada.text_io;
@@ -22,7 +20,7 @@ package body svg_exporter is
         base_pos : point_t;
 
         function export_polygon(polygon : point_list.node_ptr) return unbounded_string is
-            svg_text : unbounded_string := to_unbounded_string(svg_polygon_begin);
+            svg_text : unbounded_string := to_unbounded_string(svg_polygon_begin & get_r & svg_polygon_end_style);
             curr_point : point_list.node_ptr := polygon;
             curr_pos : point_t;
         begin

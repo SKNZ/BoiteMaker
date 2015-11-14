@@ -31,6 +31,9 @@ package commandline_args is
     -- Obtient le paramètre f
     function get_f return string;
 
+    -- Obtient le paramètre r
+    function get_r return string;
+
     -- Obtient une option autre que les options prévues par défaut 
     function get_option(option : character; default : string) return string;
 private
@@ -39,5 +42,5 @@ private
 
     -- Les paramètres de l'application
     t, l, w, q, h, b : integer := int_no_value;
-    f : unbounded_string := null_unbounded_string;
+    f, r : unbounded_string := null_unbounded_string;
 end commandline_args;

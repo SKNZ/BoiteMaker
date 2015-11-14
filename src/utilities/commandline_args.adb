@@ -15,7 +15,7 @@ package body commandline_args is
         -- Boucle d'obtention des paramètres
         -- TODO: gérer si parameter non fourni
         loop
-            case getopt("t: w: l: q: h: b: f:") is
+            case getopt("t: w: l: q: h: b: f: r:") is
                 when 't' =>
                     t := integer'value(parameter);
                 when 'w' =>
@@ -30,6 +30,8 @@ package body commandline_args is
                     b := integer'value(parameter);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
+                when 'r' =>
+                    r := to_unbounded_string(parameter);
                 when others =>
                     exit;
             end case;
@@ -88,6 +90,16 @@ package body commandline_args is
     function get_f return string is
     begin
         return to_string(f);
+    end;
+
+    -- obtient le paramètre r
+    function get_r return string is
+    begin
+        if r = null_unbounded_string then
+            return "white";
+        else
+            return to_string(r);
+        end if;
     end;
 
     function get_option(option : character; default : string) return string is

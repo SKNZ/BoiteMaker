@@ -1,6 +1,8 @@
 with ada.characters.latin_1;
 with box_parts;
 use box_parts;
+with commandline_args;
+use commandline_args;
 
 package svg_exporter is
     -- exporte la boite au format svg
@@ -18,7 +20,10 @@ package svg_exporter is
 "     xmlns=""http://www.w3.org/2000/svg"">" & lf;
 
     svg_polygon_begin : constant string :=
-        tab & "<polygon style=""stroke:red;fill:white"" points=""";
+        tab & "<polygon style=""stroke:red;fill:";
+
+    svg_polygon_end_style : constant string := 
+        """ points=""";
 
     svg_polygon_end : constant string :=
         """/>" & lf;
