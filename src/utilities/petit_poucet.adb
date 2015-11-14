@@ -34,37 +34,16 @@ package body petit_poucet is
     -- Instanciations des fonctions de mouvement avec pour nom internal_*
     -- On ne peut les instancier directement en tant que mv_*
     -- car Ada ne l'autorise pas (message: instanciation cannot provide for body)
-    procedure internal_float_mv_l is new mv_poucet (mv_x_ptr, -1);
-    procedure internal_float_mv_r is new mv_poucet (mv_x_ptr, 1);
-    procedure internal_float_mv_u is new mv_poucet (mv_y_ptr, -1);
-    procedure internal_float_mv_d is new mv_poucet (mv_y_ptr, 1);
+    procedure internal_mv_l is new mv_poucet (mv_x_ptr, -1);
+    procedure internal_mv_r is new mv_poucet (mv_x_ptr, 1);
+    procedure internal_mv_u is new mv_poucet (mv_y_ptr, -1);
+    procedure internal_mv_d is new mv_poucet (mv_y_ptr, 1);
 
     -- Un renommage est par contre une manière valide
     -- de fournir un corps à une fonction déclarée dans le package
     -- (contrairement à une instanciation de fonction générique)
-    procedure mv_l(poucet : in out petit_poucet_t; delta_x : float) renames internal_float_mv_l;
-    procedure mv_r(poucet : in out petit_poucet_t; delta_x : float) renames internal_float_mv_r;
-    procedure mv_u(poucet : in out petit_poucet_t; delta_y : float) renames internal_float_mv_u;
-    procedure mv_d(poucet : in out petit_poucet_t; delta_y : float) renames internal_float_mv_d;
-
-    -- Même fonctions mais avec un delta en entier, pour que ce soit pratique
-    procedure mv_l(poucet : in out petit_poucet_t; delta_x : integer) is
-    begin
-        null;
-    end;
-
-    procedure mv_r(poucet : in out petit_poucet_t; delta_x : integer) is
-    begin
-        null;
-    end;
-
-    procedure mv_u(poucet : in out petit_poucet_t; delta_y : integer) is
-    begin
-        null;
-    end;
-    
-    procedure mv_d(poucet : in out petit_poucet_t; delta_y : integer) is
-    begin
-        null;
-    end;
+    procedure mv_l(poucet : in out petit_poucet_t; delta_x : float) renames internal_mv_l;
+    procedure mv_r(poucet : in out petit_poucet_t; delta_x : float) renames internal_mv_r;
+    procedure mv_u(poucet : in out petit_poucet_t; delta_y : float) renames internal_mv_u;
+    procedure mv_d(poucet : in out petit_poucet_t; delta_y : float) renames internal_mv_d;
 end;

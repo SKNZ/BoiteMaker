@@ -1,4 +1,6 @@
 with ada.characters.latin_1;
+with logger;
+use logger;
 
 package body box_info is
     function initialize_box(t, w, l, h, q, b : integer) return box_info_t is
@@ -9,6 +11,9 @@ package body box_info is
                                         queue_length => q,
                                         inner_height => b);
     begin
+        debug("Initialisation de la boite");
+        debug(to_string(box));
+
         return box;
     end;
 
@@ -20,6 +25,8 @@ package body box_info is
     -- q <= w-4t (au moins une encoche; également pour le inner_panel, d'où le 4)
     procedure validate_box_measurements(box : box_info_t) is
     begin
+        debug("Verification des mesures entrées");
+
         if not (box.thickness > 0) then
             raise invalid_args with "t > 0";
         end if;

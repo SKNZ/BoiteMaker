@@ -1,4 +1,6 @@
 with ada.characters.latin_1;
+with logger;
+use logger;
 
 package body box_parts is
     function get_parts(box_info : box_info_t) return box_parts_t is
@@ -6,13 +8,19 @@ package body box_parts is
         inner_halfbox : halfbox_t;
         upper_halfbox : halfbox_t;
     begin
+        debug("Génération de la boîte");
+
+        -- Demi boite inférieure
         lower_halfbox := get_halfbox(
             box_info.width,
             box_info.length,
+            -- On gère la parité ici et fait ajoute le "surplus"
+            -- sur la boîte du bas
             box_info.height / 2 + box_info.height mod 2,
             box_info.thickness,
             box_info.queue_length);
 
+        -- Demi boite du millieu
         inner_halfbox := get_halfbox(
             box_info.width - 2 * box_info.thickness,
             box_info.length - 2 * box_info.thickness,
@@ -20,6 +28,7 @@ package body box_parts is
             box_info.thickness,
             box_info.queue_length);
 
+        -- Demi boite du haut
         upper_halfbox := get_halfbox(
             box_info.width,
             box_info.length,
