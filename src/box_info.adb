@@ -22,7 +22,10 @@ package body box_info is
     -- l >= w
     -- l-2t, w-2t > 0
     -- b < h-2t
-    -- q <= w-4t (au moins une encoche; également pour le inner_panel, d'où le 4)
+    -- q <= l-4t (Test aussi sur la inner boite d'où le 4)
+    -- q <= w-4t (Test aussi sur la inner boite d'où le 4)
+    -- q <= h-2t
+    -- q <= b-2t
     procedure validate_box_measurements(box : box_info_t) is
     begin
         debug("Verification des mesures entrées");
@@ -71,8 +74,18 @@ package body box_info is
             raise invalid_args with "b < h - 2 * t";
         end if;
 
+        if not (box.queue_length <= box.length - 4 * box.thickness) then
+            raise invalid_args with "q <= l - 4 * t";
+        end if;
         if not (box.queue_length <= box.width - 4 * box.thickness) then
             raise invalid_args with "q <= w - 4 * t";
+        end if;
+        if not (box.queue_length <= box.height - 2 * box.thickness) then
+            raise invalid_args with "q <= h - 2 * t";
+        end if;
+
+        if not (box.queue_length <= box.inner_height - 2 * box.thickness) then
+            raise invalid_args with "q <= b - 2 * t";
         end if;
     end;
 
