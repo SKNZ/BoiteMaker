@@ -1,0 +1,104 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fourier} % Adobe Utopia
+\usepackage[french]{babel}
+% \usepackage{amsmath,amsfonts,amsthm}
+
+\usepackage{sectsty}
+\allsectionsfont{\normalfont\scshape} 
+
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead{}
+\fancyfoot[L]{} 
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{14.6pt}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+
+\title{
+    \normalfont \normalsize
+    \textsc{École nationale supérieure d'informatique et de mathématiques appliquées de Grenoble} \\ [25pt]
+    \horrule{0.5pt} \\[0.4cm]
+    \huge BoiteMaker \\
+    \horrule{2pt} \\[0.5cm]
+}
+
+\author{Robin VINCENT-DELEUZE \& Floran NARENJI-SHESHKALANI} 
+
+\date{\normalsize\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Ce projet est réalisé dans le cadre du cours d'Ada suivi à l'Ensimag en première année. Cette application génère, selon les entrées saisies par l'utilisateur, un patron de conception pour une boîte. Cette boîte se veut personnalisable à travers une série de paramètre standards (dimensions, couleurs\dots).
+
+La lecture du fichier \textbf{README.md}, située à la racine du repository est avisée.
+Dans le dossier \textbf{doc} se trouvent deux exemples ayant servi à expliquer la généricité et les pointeurs de fonction.
+
+\section{Fonctionnalités supplémentaires}
+
+Nous permettons à l'utilisateur d'afficher les informations de deboggage (\texttt{-{}-show-debug}), d'enregistrer les informations de deboggage dans un fichier (\texttt{-{}-log FILE}), de choisir la couleur de la bordure (\texttt{-{}-border COLOR}), du remplissage (\texttt{-{}-fill COLOR}) et de choisir le motif de remplissage (\texttt{-{}-pattern FILE}).
+
+{\huge \danger} La fonction \texttt{-{}-pattern} requiert la présence d'\textbf{ImageMagick}.
+
+\section{Choix techniques}
+
+\subsection{Gestion de version}
+
+Nous utilisons le système de gestion de version \textbf{git} sur la plateforme \textbf{github} afin de maintenir l'historique de nos modifications et de synchroniser le code entre les différents lieux et membres de l'équipe.
+
+\subsection{Système de build}
+
+Idéalement, nous souhaitions mettre notre code source dans un dossier, les fichiers de compilation dans un autre et les binaires dans un dernier. Réaliser cela avec gnatmake s'est avéré fastidieux : de nombreux paramètres se succèdent avec peu de maintenabilité, et le plus simple pour standardiser le processus est un fichier bash.
+
+Nous choisissons d'employer le système de build \textbf{gprbuild}.\textbf{gprbuild} permet de décrire l'ensemble des comportements que l'on souhaite appliquer dans un unique fichier (ici \textit{BoiteMaker.gpr}) qui est standardisé, claire et écrit dans un dérivé proche d'Ada.
+
+Nous spécifions aussi à travers \textbf{gprbuild} l'ensemble des paramètres de compilations supplémentaires souhaités (notamment l'affichage de tout warning).
+
+\subsection{Responsabilité unique}
+
+Nous choisissons d'appliquer le principe de responsabilité unique. Ainsi, nous distinguons différents packages qui sont eux même séparés en deux dossiers:
+\begin{description}
+    \item[src] Fonctionnalités métiers liées directement à la boîte \hfill \\
+        \textit{box\_info, box\_parts, halfbox, halfbox\_panel, svg}
+    \item[src/utilities] Fonctionnalités annexes \hfill \\ \textit{commandline\_args, generic\_linked\_list, imagemagick, logger, help, point, text\_file, petit\_poucet}
+\end{description}
+
+Une autre règle que nous choisissons d'appliquer est de ne pas avoir d'objet partiellement initialisé: un object est soit non-initialisé, soit entièrement et complètement initialisé. Du point de vue du programmeur, les packages sont "atomiques" dans le sens où ils acceptent un jeu d'arguments et renvoient à partir de celui-ci un objet complet.
+
+\subsection{Décomposition en arbre}
+
+Le processus de génération de la boîte peut se représenter sous la forme d'un ensemble de relation père-fils.
+
+Le premier enregistrement, \textbf{box\_info\_t}, est hydraté à l'aide des entrées de la ligne de commande. Ensuite, celui-ci est passé au package \textbf{box\_parts}, qui extrait les informations nécessaires à la génération de chacune des demi-boîtes et les transmet au package \textbf{halfbox}, qui réalise la même opération pour chacune des faces de la demi-boîte avec le package \textbf{halfbox\_panel}.
+
+Conceptuellement, on observe d'abord la boîte, et on la divise progressivement en entités de plus en plus simples jusqu'à ce que l'on atteigne une entité d'une simplicité permettant son calcul.
+
+\subsection{Liste générique, point \& petit poucet}
+
+On choisit de représenter le polygone sous la forme d'une liste simplement chaînée. Cette liste est générique, ce qui permet sa réutilisation ultérieure pour tout type. Ici, elle est utilisée avec l'enregistrement \textbf{point\_t}, un ensemble de coordonées \texttt{(x, y)}.
+
+Le petit poucet est un aide. Son objectif est de simplifier la programmation de la logique de dessin de chaque patron. On dirige le petit poucet sur chacun des axes à l'aide de fonctions permettant de réaliser des mouvements (gauche, droite, haut, bas) et celui-ci enregistre dans une liste chainée de point sa position à chaque instant. Une fois le petit poucet revenu en position initiale (définie à sa création), le dessin du patron est fini.
+
+\subsection{SVG}
+
+L'unique fonction du package svg accepte en entrée un \textbf{box\_parts\_t}. Elle permet de séléctionner une couleur de bordur, de remplissage et un motif de remplissage. Elle renvoie une chaîne de caractère contenant la représentation en SVG de la boîte, en procédant conceptuellement comme pour le processus de construction, c'est à dire de haut (boîte) en bas (face).
+
+\subsection{ImageMagick}
+
+Pour le remplissage de la boîte par un motif, le logiciel ImageMagick est utilisé. Celui-ci permet de récupérer l'image encodée en base64 et d'obtenir ses dimensions, trois données nécessaires pour embarquer une image dans un fichier SVG. ImageMagick est appelé directement en tant que processus. Cela est moins fiable qu'une bibliothèque liée à la compilation mais a pour avantage d'éviter l'intégration au projet d'un wrapper autour d'une API native
+d'ImageMagick, couteuse à compiler et difficile à intégrer. On sacrifie donc  la résolution de la dépendance à la compilation pour une résolution à l'exécution, ce qui rend la bonne exécution du programme dépendante de la capacité de l'utilisateur à fournir une installation d'ImageMagick fonctionnelle.
+
+\subsection{Logging}
+
+Le logging, présent à travers tout le code, nous permet de tracer l'execution détaillée du programme et d'enregistrer sa trace dans un fichier ou sur la console. Les logs sont d'une grande utilité à la résolution des problèmes : ils permettent d'accéder à une vaste quantité d'information sans cependant avoir à utiliser un outil tel que gdb, peu évident pour des débutants.
+
+\end{document}
