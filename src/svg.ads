@@ -21,7 +21,7 @@ package svg is
 "     xmlns:xlink=""http://www.w3.org/1999/xlink"">" & lf;
 
     svg_polygon_begin : constant string :=
-        tab & "<polygon style=""stroke:";
+        tab & "<polygon style=""stroke-width:0.1;stroke:";
     
     svg_polygon_fill_style : constant string :=
         ";fill:";
