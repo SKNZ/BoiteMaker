@@ -19,6 +19,8 @@ with text_file_writer;
 use text_file_writer;
 with logger;
 use logger;
+with help;
+use help;
 
 procedure boites is
     box_info : box_info_t;
@@ -31,7 +33,7 @@ begin
     debug("BoiteMaker started");
     
     if get_show_help then
-        put("ICI L'AIDE");
+        put(show_help);
     end if;
     
     -- Construction de l'objet portant les informations de la boîte
