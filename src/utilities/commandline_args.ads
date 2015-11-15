@@ -45,12 +45,15 @@ package commandline_args is
 
     -- Obtient le paramètre log 
     function get_log_file return string;
+
+    -- Obtient le paramètre pattern 
+    function get_pattern return string;
 private
     -- Constante définissant l'état non initialise
     int_no_value : constant integer := -1;
 
     -- Les paramètres de l'application
     t, l, w, q, h, b : integer := int_no_value;
-    f, border_color, fill_color, log_file : unbounded_string := null_unbounded_string;
+    f, border_color, fill_color, log_file, pattern : unbounded_string := null_unbounded_string;
     show_help, show_debug : boolean;
 end commandline_args;

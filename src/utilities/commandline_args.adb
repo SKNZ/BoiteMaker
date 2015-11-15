@@ -13,7 +13,7 @@ package body commandline_args is
         -- Boucle d'obtention des paramètres
         -- TODO: gérer si parameter non fourni
         loop
-            case getopt("t: w: l: q: h: b: f: r: -fill: -border: -show-debug -log: -help") is
+            case getopt("t: w: l: q: h: b: f: r: -fill: -border: -show-debug -log: -help -pattern:") is
                 when 't' =>
                     t := integer'value(parameter);
                 when 'w' =>
@@ -39,6 +39,8 @@ package body commandline_args is
                         show_debug := true;
                     elsif full_switch = "-log" then
                         log_file := to_unbounded_string(parameter);
+                    elsif full_switch = "-pattern" then
+                        pattern := to_unbounded_string(parameter);
                     end if; 
                 when others =>
                     exit;
@@ -128,5 +130,11 @@ package body commandline_args is
     function get_log_file return string is
     begin
         return to_string(log_file);
+    end;
+
+    -- obtient le paramètre pattern
+    function get_pattern return string is
+    begin
+        return to_string(pattern);
     end;
 end commandline_args;

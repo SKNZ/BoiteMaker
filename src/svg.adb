@@ -10,9 +10,10 @@ with halfbox;
 use halfbox;
 with logger;
 use logger;
+with imagemagick;
 
 package body svg is
-    function get_svg(box : box_parts_t; input_border_color, input_fill_color : string) return string is
+    function get_svg(box : box_parts_t; input_border_color, input_fill_color, pattern : string) return string is
         base_pos : point_t;
 
         selected_fill_color : unbounded_string := to_unbounded_string(input_fill_color);
@@ -68,6 +69,8 @@ package body svg is
 
             return to_string(svg_text);
         end;
+
+        svg_defs : unbounded_string := to_unbounded_string("");
     begin
         debug("Export en svg");
 
@@ -83,11 +86,31 @@ package body svg is
             selected_border_color := to_unbounded_string(default_border_color);
         end if;
 
+        if pattern'length /= 0 then
+            declare
+                base64 : unbounded_string;
+                w,h : integer;
+            begin
+                imagemagick.get_base64(pattern, base64, w, h);
+
+                svg_defs :=
+tab & "<defs>" & lf &
+tab & "   <pattern id=""polyfill"" patternUnits=""userSpaceOnUse"" width=""" & integer'image(w)  & """ height=""" & integer'image(h) & """>" & lf &
+tab & "      <image xlink:href=""" & base64 & """ x=""0"" y=""0"" width="""  & integer'image(w) & """ height=""" & integer'image(h) & """ />" & lf &
+tab & "    </pattern>" & lf &
+tab & "</defs>" & lf;
+
+                selected_fill_color := to_unbounded_string("url(#polyfill)");
+            end;
+
+        end if;
+
         return
-            svg_header
+            to_string(svg_header
+            & svg_defs
             & export_halfbox(box.lower_halfbox)
             & export_halfbox(box.inner_halfbox)
             & export_halfbox(box.upper_halfbox)
-            & svg_footer;
+            & svg_footer);
     end;
 end svg;

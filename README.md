@@ -21,3 +21,6 @@ Executables will be found in the bin folder after build (see builder instruction
 # References
 - GPR file
 https://gcc.gnu.org/onlinedocs/gcc-3.3.5/gnat_ug_unx/Common-Sources-with-Different-Switches-and-Different-Output-Directories.html
+- Process interaction
+http://www.adacore.com/adaanswers/gems/gem-54/
+https://www2.adacore.com/gap-static/GNAT_Book/html/rts/g-expect__ads.htm

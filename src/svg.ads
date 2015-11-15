@@ -4,7 +4,7 @@ use box_parts;
 
 package svg is
     -- exporte la boite au format svg
-    function get_svg(box : box_parts_t; input_border_color, input_fill_color : string) return string;
+    function get_svg(box : box_parts_t; input_border_color, input_fill_color, pattern : string) return string;
 
     private
 
