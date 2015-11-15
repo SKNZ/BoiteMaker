@@ -4,8 +4,6 @@ with gnat.expect;
 use gnat.expect;
 with text_file;
 use text_file;
-with ada.text_io;
-use ada.text_io;
 with ada.directories;
 use ada.directories;
 with logger;
