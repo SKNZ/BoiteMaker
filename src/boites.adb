@@ -33,7 +33,7 @@ begin
     debug("BoiteMaker started");
     
     if get_show_help then
-        put(show_help);
+        show_help;
     end if;
     
     -- Construction de l'objet portant les informations de la boîte
