@@ -65,6 +65,10 @@ exception
         debug("argument_missing raised: " & exception_message(e));
         put_line("Un argument est manquant: "
             & exception_message(e));
+    
+        new_line;
+
+        show_help;
 
         -- Indication au shell d'un status d'erreur
         set_exit_status(1);
@@ -73,6 +77,10 @@ exception
         debug("argument_missing raised: " & exception_message(e));
         put_line("Vos argument ne respectaient pas la contrainte suivante: "
             & exception_message(e));
+    
+        new_line;
+
+        show_help;
 
         -- Indication au shell d'un status d'erreur
         set_exit_status(2);
