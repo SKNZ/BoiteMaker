@@ -17,7 +17,8 @@ package svg is
     svg_header : constant string :=
 "<svg version=""1.1""" & lf & 
 "     baseProfile=""full""" & lf & 
-"     xmlns=""http://www.w3.org/2000/svg"">" & lf;
+"     xmlns=""http://www.w3.org/2000/svg""" & lf &
+"     xmlns:xlink=""http://www.w3.org/1999/xlink"">" & lf;
 
     svg_polygon_begin : constant string :=
         tab & "<polygon style=""stroke:";

@@ -338,6 +338,11 @@ package body halfbox_panel is
         end if;
     end;
 
+    procedure destroy(panel : in out halfbox_panel_t) is
+    begin
+        point_list.destroy(panel.polygon);
+    end;
+
     function to_string(panel : halfbox_panel_t) return string is
         lf : constant character := ada.characters.latin_1.LF;
     begin

@@ -54,6 +54,9 @@ begin
         -- Ecriture du fichier svg
         write_string_to_file(get_f, svg);
     end;
+    
+    logger.close;
+    destroy(box_parts);
 exception
     -- Argument manquant
     when e: argument_missing =>

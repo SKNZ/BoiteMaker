@@ -29,6 +29,15 @@ package body halfbox is
         return halfbox; 
     end;
 
+    procedure destroy(halfbox : in out halfbox_t) is
+    begin
+        destroy(halfbox.panel_bottom);
+        destroy(halfbox.panel_back);
+        destroy(halfbox.panel_front);
+        destroy(halfbox.panel_left);
+        destroy(halfbox.panel_right);
+    end;
+
     function to_string(halfbox : halfbox_t) return string is
         tab : constant character := ada.characters.latin_1.HT;
         lf : constant character := ada.characters.latin_1.LF;

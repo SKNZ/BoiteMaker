@@ -27,6 +27,9 @@ package halfbox is
 
     -- Obtient une demi-boite avec les mesures données
     function get_halfbox(width, length, height, thickness, queue_length : integer) return halfbox_t;
+    
+    -- Detruit la demi boite
+    procedure destroy(halfbox : in out halfbox_t);
 
     -- Obtient une description texte de la demiboite
     function to_string(halfbox : halfbox_t) return string;

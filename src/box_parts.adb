@@ -41,6 +41,13 @@ package body box_parts is
             upper_halfbox => upper_halfbox);
     end;
 
+    procedure destroy(parts : in out box_parts_t) is
+    begin
+        destroy(parts.lower_halfbox);
+        destroy(parts.inner_halfbox);
+        destroy(parts.upper_halfbox);
+    end;
+
     function to_string(box_parts : box_parts_t) return string is
         tab : constant character := ada.characters.latin_1.HT;
         lf : constant character := ada.characters.latin_1.LF;

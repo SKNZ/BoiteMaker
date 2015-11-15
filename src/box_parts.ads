@@ -19,6 +19,9 @@ package box_parts is
     -- Génére les différentes parties de la boîte
     function get_parts(box_info : box_info_t) return box_parts_t;
 
+    -- Détruit la boîte
+    procedure destroy(parts : in out box_parts_t);
+
     -- Réprésentation texte des parties de la boites
     function to_string(box_parts : box_parts_t) return string;
 end box_parts;

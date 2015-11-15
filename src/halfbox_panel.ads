@@ -28,6 +28,9 @@ package halfbox_panel is
 
     -- Renvoie une représentation texte de la face
     function to_string(panel : halfbox_panel_t) return string;
+
+    -- Detruit la face
+    procedure destroy(panel : in out halfbox_panel_t);
     
     private
 
