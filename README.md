@@ -8,6 +8,8 @@ Comments in the code are written in French due to school-related constraints.
 
 Executables will be found in the bin folder after build (see builder instructions for more information).
 
+If you wish to use the --pattern option, ImageMagick is required, and should be present in your $PATH.
+
 # Build instructions
 - With gprbuild: run "gprbuild" in the root directory of the projet
 - With gnatmake: run "gnat make -P BoiteMaker.gpr" in the root directory of the project
