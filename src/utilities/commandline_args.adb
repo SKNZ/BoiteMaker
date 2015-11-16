@@ -1,5 +1,3 @@
-with ada.io_exceptions;
-use ada.io_exceptions;
 with gnat.command_line;
 use gnat.command_line;
 
@@ -16,7 +14,7 @@ package body commandline_args is
         begin
             val := integer'value(text);
         exception
-            when data_error =>
+            when constraint_error =>
                 raise argument_missing with name;
         end;
     begin
