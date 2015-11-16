@@ -1,3 +1,5 @@
+with ada.io_exceptions;
+use ada.io_exceptions;
 with gnat.command_line;
 use gnat.command_line;
 
@@ -9,23 +11,30 @@ package body commandline_args is
                 raise argument_missing with name;
             end if;
         end;
+
+        procedure int_exception(name : string; text : in string; val : in out integer) is
+        begin
+            val := integer'value(text);
+        exception
+            when data_error =>
+                raise argument_missing with name;
+        end;
     begin
         -- Boucle d'obtention des paramètres
-        -- TODO: gérer si parameter non fourni
         loop
             case getopt("t: w: l: q: h: b: f: r: -fill: -border: -show-debug -log: -help -pattern:") is
                 when 't' =>
-                    t := integer'value(parameter);
+                    int_exception("t", parameter, t);
                 when 'w' =>
-                    w := integer'value(parameter);
+                    int_exception("w", parameter, w);
                 when 'l' =>
-                    l := integer'value(parameter);
+                    int_exception("l", parameter, l);
                 when 'q' =>
-                    q := integer'value(parameter);
+                    int_exception("q", parameter, q);
                 when 'h' =>
-                    h := integer'value(parameter);
+                    int_exception("h", parameter, h);
                 when 'b' =>
-                    b := integer'value(parameter);
+                    int_exception("b", parameter, b);
                 when 'f' =>
                     f := to_unbounded_string(parameter);
                 when '-' =>
